@@ -19,9 +19,6 @@ public class User {
         this.courses = new ArrayList<>();
         this.groups = new ArrayList<>();
     }
-    public void joinGroup(UUID code){
-                //TODO
-    }
 
     public void leaveGroup(Group groupId){
         groups.remove(groupId);
@@ -29,11 +26,6 @@ public class User {
 
     }
 
-    public Group createGroup(String groupName){
-        Group g = new Group(groupName, UUID.randomUUID(), userId);
-        groups.add(g);
-        return g;
-    }
     public void removeCourse (String course){
         courses.remove(course);
     }

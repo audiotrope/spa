@@ -1,5 +1,6 @@
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 public class Group{
@@ -11,10 +12,10 @@ public class Group{
 
 
 
-    public Group (String name, UUID id, UUID creator){
+    public Group (String name, UUID groupId, UUID creator){
         this.members = new HashMap<>();
         members.put(creator, Roles.ADMIN);
-        this.groupId = id;
+        this.groupId = groupId;
         this.groupName = name;
 
     }
@@ -22,16 +23,20 @@ public class Group{
         return groupId;
     }
 
-   public void addMember(UUID newMember){
+    void addMember(UUID newMember){
         members.put(newMember, Roles.MEMBER);
    }
 
-   public void removeMember(UUID memberToRemove){
-        members.remove(memberToRemove);
+    void removeMember(UUID memberToRemove){
+       members.remove(memberToRemove);
+   }
+   public Set<UUID> getMembers(){
+        return members.keySet();
    }
 
-   public boolean isAdmin(UUID user){
+    boolean isAdmin(UUID user){
        return members.get(user) == Roles.ADMIN;
+
     }
 
    public void changeRole(UUID currentUser, UUID userToChange, Roles role) {
@@ -43,6 +48,8 @@ public class Group{
            else throw new IllegalStateException("You need to be an Admin to do this");
        }
        else throw new IllegalStateException("this member is not in the group");
+
+
    }
 
 
@@ -61,15 +68,6 @@ public class Group{
 
 
     public static void main(String[] args){
-    User ulla = new User("ulla");
-    User Anna = new User("Anna");
-    Group g = ulla.createGroup("ullasGrupp");
-    g.addMember(Anna.getUserId());
-
-
-
-
-
 
 
     }

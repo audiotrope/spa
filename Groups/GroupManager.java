@@ -1,6 +1,21 @@
+import java.util.HashMap;
+import java.util.UUID;
+
 public class GroupManager {
+    private HashMap<UUID, Group> groups;
 
-        public GroupManager(){
-
+    public GroupManager(){
+        this.groups = new HashMap<>();
     }
+
+    public Group createGroup(String groupName, UUID creator){
+        return new Group(groupName, UUID.randomUUID(), creator);
+    }
+
+    public void joinGroup(UUID groupId, User user){
+        groups.get(groupId).addMember(user.getUserId());
+    }
+
+
+
 }
