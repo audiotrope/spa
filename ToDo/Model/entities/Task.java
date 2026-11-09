@@ -1,23 +1,36 @@
 package Model.entities;
 
+import Model.enums.Status;
+import Model.enums.TaskType;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.UUID;
 
 public class Task {
     private String title;
     private String description;
-    private String status;
+    private Status status;
     //private Set<String> users;
-    private UUID id;
+    private final UUID id;
     private LocalDate deadline;
+    private Set<TaskAssignment> assignments;
+    private TaskType type;
+    private UUID boardId;
+    private UUID listId;
+    private UUID ownerId;
 
-    public Task(UUID id, String title, String description, LocalDate deadline){
-        this.id = id;
+    public Task(String title, String description, LocalDate deadline, TaskType type, UUID ownerId, UUID boardId, UUID listId){
+        this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
-        this.status = "Undoing";
+        this.status = Status.TODO;
         this.deadline = deadline;
-        //this.users = new Set<String>();
+        this.type  = type;
+        this.ownerId = ownerId;
+        this.boardId = boardId;
+        this.listId = listId;
     }
 
     public void changeDescription(String description){
@@ -28,7 +41,7 @@ public class Task {
         this.title = title;
     }
 
-    public void ChangeStatus(String status){
+    public void ChangeStatus(Status status){
         this.status = status;
     }
 
@@ -36,7 +49,7 @@ public class Task {
         return title;
     }
 
-    public String getStatus(){
+    public Status getStatus(){
         return status;
     }
 
@@ -44,7 +57,22 @@ public class Task {
         return deadline;
     }
 
-    //public void assignUser(User user){
-   //     users.add(user);
-    //}
+    public void assignUser(UUID userId){
+       if (type != TaskType.GROUP){
+            throw new IllegalStateException(
+                    "Only group tasks can have assignments"
+            );
+       }
+       if (userId == null){
+           throw new IllegalStateException(
+                   "User ID can not bu null"
+           );
+       }
+        // här ska den på något sätt kalla på TaskAssignment som hanterar alla assignments
+        // för att jobba enligt SOLID
+    }
+
+    public void unassignUser(UUID userId){
+
+    }
 }
