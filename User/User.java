@@ -6,30 +6,41 @@ public class User {
     private final String username;
     private final UUID userId;
     private ArrayList<String> courses;
-    private ArrayList<Group> groups;
+    public ArrayList<Group> groups;
 
     //Todos todos;
     //Schedule schedule;
+
+
     public User (String username){
         this.userId = UUID.randomUUID();
         this.username = username;
+
         this.courses = new ArrayList<>();
         this.groups = new ArrayList<>();
     }
     public void joinGroup(UUID code){
-        //TODO
+                //TODO
     }
-    public void leaveGroup(Group groupName){
-        groups.remove(groupName);
+
+    public void leaveGroup(Group groupId){
+        groups.remove(groupId);
+        groupId.removeMember(userId);
 
     }
-    public void createGroup(String groupName){
-        groups.add(new Group(groupName, UUID.randomUUID(), userId));
+
+    public Group createGroup(String groupName){
+        Group g = new Group(groupName, UUID.randomUUID(), userId);
+        groups.add(g);
+        return g;
     }
     public void removeCourse (String course){
         courses.remove(course);
     }
     public void addCourse (String courseName){
         courses.add(courseName);
+    }
+    public UUID getUserId(){
+        return userId;
     }
 }
