@@ -13,7 +13,6 @@ public class Task {
     private String title;
     private String description;
     private Status status;
-    //private Set<String> users;
     private final UUID id;
     private LocalDate deadline;
     private Set<TaskAssignment> assignments;
@@ -43,7 +42,7 @@ public class Task {
         this.title = title;
     }
 
-    public void ChangeStatus(Status status){
+    public void changeStatus(Status status){
         this.status = status;
     }
 
