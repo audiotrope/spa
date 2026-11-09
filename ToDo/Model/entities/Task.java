@@ -5,6 +5,7 @@ import Model.enums.TaskType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,6 +32,7 @@ public class Task {
         this.ownerId = ownerId;
         this.boardId = boardId;
         this.listId = listId;
+        this.assignments = new HashSet<TaskAssignment>();
     }
 
     public void changeDescription(String description){
@@ -68,11 +70,10 @@ public class Task {
                    "User ID can not bu null"
            );
        }
-        // här ska den på något sätt kalla på TaskAssignment som hanterar alla assignments
-        // för att jobba enligt SOLID
+       assignments.add(new TaskAssignment(userId));
     }
 
     public void unassignUser(UUID userId){
-
+        // vet ej just nu
     }
 }
