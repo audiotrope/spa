@@ -17,10 +17,16 @@ public class Board {
     public void addList(TaskList list){
         taskLists.add(list);
     }
-    public void removeList(TaskList list){
-        taskLists.remove(list);
+    public void removeList(UUID taskListId){
+        taskLists.removeIf(
+                list -> list.getId().equals(taskListId)
+        );
     }
-    public void moveTask(UUID newlistId, UUID task, UUID oldlistId){
-        //TODO
+    public void moveTask(UUID task, UUID targetListId){
+        // hitta först rätt task med det UUID i denna listan
+        // spara den i en temporär variabel
+        // ta bort den från första listan
+        // hitta rätt lista med rätt UUID
+        // lägg till task i dens lista
     }
 }

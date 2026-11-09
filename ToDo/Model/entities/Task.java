@@ -57,6 +57,9 @@ public class Task {
     public LocalDate getDeadline(){
         return deadline;
     }
+    public UUID getId(){
+        return id;
+    }
 
     public void assignUser(UUID userId){
        if (type != TaskType.GROUP){

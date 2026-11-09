@@ -22,17 +22,19 @@ public class TaskList {
     public void addTask(Task task){
         tasks.add(task);
     }
-    public void createTask( String title, String description, LocalDate deadline, TaskType type, UUID ownerId, UUID boardId, UUID listId){
-        Task task = new Task(title, description, deadline,type, ownerId, boardId, id);
-        addTask(task);
-    }
-    public void removeTask(Task task){
-        tasks.remove(task);
+    public void removeTask(UUID taskId){
+        tasks.removeIf(
+                task -> task.getId().equals(taskId)
+        );
     }
     public void rename(String title){
         this.title = title;
     }
     public void reorder(Integer position){
         this.position = position;
+    }
+
+    public UUID getId(){
+        return id;
     }
 }
