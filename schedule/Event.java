@@ -1,7 +1,11 @@
 package schedule;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+
+import schedule.providers.EventProvider;
 
 public class Event {
 
@@ -28,6 +32,24 @@ public class Event {
 
     public LocalDateTime getSlut() {
         return this.slut;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public ArrayList<LocalTime> get_Event_Timespan() {
+
+        return new ArrayList<>(List.of(this.start.toLocalTime(), this.slut.toLocalTime()));
+    }
+
+    public void show_event() {
+
+        System.err.println(this.start.toLocalTime() + " - " + this.slut.toLocalTime());
+        System.err.println(eventName);
+        System.err.println(activity);
+        System.err.println(locations);
+
     }
 
 }
