@@ -4,7 +4,6 @@ import Model.enums.Status;
 import Model.enums.TaskType;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -76,6 +75,8 @@ public class Task {
     }
 
     public void unassignUser(UUID userId){
-        // vet ej just nu
+        assignments.removeIf(
+                user -> user.getUserId().equals(userId)
+        );
     }
 }
