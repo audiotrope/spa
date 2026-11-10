@@ -17,7 +17,7 @@ public class Week {
     }
 
     public void add_Event(String day, LocalTime start, LocalTime slut, String eventName, String activity,
-            ArrayList<ArrayList> locations, ArrayList<ArrayList> userData) {
+            ArrayList<String> locations, ArrayList<String> userData) {
 
         Event event = new Event(start, slut, eventName, activity, locations, userData);
 

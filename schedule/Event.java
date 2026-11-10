@@ -10,11 +10,11 @@ public class Event {
     LocalDateTime slut;
     String eventName;
     String activity;
-    public ArrayList<ArrayList> locations = new ArrayList<ArrayList>();
-    public ArrayList<ArrayList> userData = new ArrayList<ArrayList>();
+    public ArrayList<String> locations = new ArrayList<String>();
+    public ArrayList<String> userData = new ArrayList<String>();
 
     public Event(LocalDateTime start, LocalDateTime slut, String eventName, String activity,
-            ArrayList<ArrayList> locations, ArrayList<ArrayList> userData) {
+            ArrayList<String> locations, ArrayList<String> userData) {
 
         this.start = start;
         this.slut = slut;
