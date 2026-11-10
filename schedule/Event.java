@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class Event {
 
-    LocalDateTime start;
-    LocalDateTime slut;
-    String eventName;
-    String activity;
+    public LocalDateTime start;
+    public LocalDateTime slut;
+    public String eventName;
+    public String activity;
     public ArrayList<String> locations = new ArrayList<String>();
 
     public Event(LocalDateTime start, LocalDateTime slut, String eventName, String activity,
