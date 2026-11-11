@@ -1,9 +1,11 @@
 package service;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.UUID;
 
@@ -17,7 +19,9 @@ public class SupaBaseStorageService {
             String userJwt,
             String userId
     ) throws Exception {
-        String objectKey = "users/" + userId + "/" + UUID.randomUUID();
+        String filename = URLEncoder.encode(file.getFileName().toString(), StandardCharsets.UTF_8)
+                .replace("+", "%20"); // Treat spaces correctly
+        String objectKey = "users/" + userId + "/" + UUID.randomUUID() + "/" + filename;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/storage/v1/object/"
