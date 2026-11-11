@@ -18,6 +18,8 @@ public class Schedule {
 
     public Schedule(String url) { // enskild person Schedule
 
+        // ends with ics
+
         this.url = url;
 
         // this.schedule = icsFile.fromString(url.toString());
@@ -58,18 +60,15 @@ public class Schedule {
         return schedule;
     }
 
-    public ArrayList<Event> getMetingTimes() {
+    public void getMetingTimes() {
 
-        ArrayList<Event> meetingschedule = new ArrayList<Event>();
+        ArrayList<Record> meetingschedule = new ArrayList<Record>();
 
-        LocalDateTime startingdey = this.schedule.get(0).getStart();
+        LocalDateTime dey = this.schedule.get(0).getStart();
 
         for (Event e : this.schedule) {
 
         }
-
-        return new ArrayList<Event>();
-
     }
 
     private void short_Schedule() {
@@ -92,7 +91,7 @@ public class Schedule {
 
         Schedule s = new Schedule("https://cloud.timeedit.net/chalmers/web/public/ri6y7YQQu1QZnZQ98Z45beZ35685Q.ics");
 
-        s.show_Schedule();
+        s.getMetingTimes();
 
     }
 
