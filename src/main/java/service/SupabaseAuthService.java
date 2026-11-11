@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -81,6 +82,7 @@ public class SupabaseAuthService {
                 tokens.accessToken(),
                 tokens.refreshToken(),
                 tokens.user().id(),
+                tokens.user().email(),
                 Instant.now().plusSeconds(tokens.expiresIn()));
     }
 
@@ -103,16 +105,17 @@ public class SupabaseAuthService {
             @SerializedName("expires_in") long expiresIn,
             User user) {}
 
-    private record User(String id) {}
+    private record User(String id, String email) {}
 
     /**
      * User session
      * @param accessToken User access token
      * @param refreshToken User refresh token
      * @param userId User id
+     * @param userEmail User email
      * @param expiresAt When the access token expires
      */
-    public record Session(String accessToken, String refreshToken, String userId, Instant expiresAt) {}
+    public record Session(String accessToken, String refreshToken, String userId, String userEmail, Instant expiresAt) {}
 
     public static final class SignInException extends Exception {
         private final int statusCode;
