@@ -1,0 +1,51 @@
+package se.chalmers.group21.spa.model;
+
+public class Model {
+  /** In pixels, measured from the top-left corner of the window. */
+  public record Position(float x, float y) {
+    public Position moveBy(Velocity velocity, float dt) {
+      return new Position(x + velocity.x() * dt, y + velocity.y() * dt);
+    }
+  }
+
+  /** In pixels per second. */
+  public record Velocity(float x, float y) {}
+
+  /** In pixels. */
+  public record Size(int width, int height) {}
+
+  private Position position;
+  private Velocity velocity;
+  private final Size size;
+
+  public Model() {
+    this(new Position(100, 100), new Velocity(0, 0), new Size(200, 150));
+  }
+
+  public Model(Position position, Velocity velocity, Size size) {
+    this.position = position;
+    this.velocity = velocity;
+    this.size = size;
+  }
+
+  /** Advances the simulation by {@code dt} seconds. */
+  public void update(float dt) {
+    position = position.moveBy(velocity, dt);
+  }
+
+  public void setVelocity(Velocity velocity) {
+    this.velocity = velocity;
+  }
+
+  public Position getPosition() {
+    return position;
+  }
+
+  public Velocity getVelocity() {
+    return velocity;
+  }
+
+  public Size getSize() {
+    return size;
+  }
+}
