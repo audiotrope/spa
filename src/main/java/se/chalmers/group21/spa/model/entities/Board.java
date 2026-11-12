@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class Board {
     private ArrayList<TaskList> taskLists;
-    private UUID id;
-    private UUID groupId;
+    private final UUID id;
+    private final UUID groupId;
     //private String title;
 
     public Board(UUID groupId){

@@ -1,7 +1,8 @@
 package se.chalmers.group21.spa.model.entities;
 
-import Model.enums.Status;
-import Model.enums.TaskType;
+
+import se.chalmers.group21.spa.model.enums.Status;
+import se.chalmers.group21.spa.model.enums.TaskType;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,9 +17,9 @@ public class Task {
     private LocalDate deadline;
     private Set<TaskAssignment> assignments;
     private TaskType type;
-    private UUID boardId;
-    private UUID listId;
-    private UUID ownerId;
+    private final UUID boardId;
+    private final UUID listId;
+    private final UUID ownerId;
 
     public Task(String title, String description, LocalDate deadline, TaskType type, UUID ownerId, UUID boardId, UUID listId){
         this.id = UUID.randomUUID();

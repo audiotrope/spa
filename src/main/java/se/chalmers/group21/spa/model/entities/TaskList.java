@@ -6,14 +6,14 @@ import java.util.UUID;
 public class TaskList {
     private ArrayList<Task> tasks;
     private String title;
-    private UUID id;
+    private final UUID id;
     private Integer position;
 
     public TaskList(String title){
         this.title = title;
         this.id = UUID.randomUUID();
         this.position = 0;
-        this.tasks = new ArrayList<Task>();
+        this.tasks = new ArrayList<>();
     }
 
     public void addTask(Task task){
