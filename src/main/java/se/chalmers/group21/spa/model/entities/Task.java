@@ -18,7 +18,7 @@ public class Task {
     private Set<TaskAssignment> assignments;
     private TaskType type;
     private final UUID boardId;
-    private final UUID listId;
+    private UUID listId;
     private final UUID ownerId;
 
     public Task(String title, String description, LocalDate deadline, TaskType type, UUID ownerId, UUID boardId, UUID listId){
@@ -65,11 +65,17 @@ public class Task {
         return id;
     }
     public UUID getOwnerId(){return ownerId;}
+    public UUID getListId(){
+        return listId;
+    }
 
     public Set<TaskAssignment> getAssignments() {
         return assignments;
     }
 
+    public void changeListId(UUID listId){
+        this.listId = listId;
+    }
     public void assignUser(UUID userId){
        if (type != TaskType.GROUP){
             throw new IllegalStateException(

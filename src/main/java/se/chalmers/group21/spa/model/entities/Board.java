@@ -31,28 +31,7 @@ public class Board {
     public ArrayList<TaskList> getTaskLists(){
         return taskLists;
     }
-    public void moveTask(UUID taskId, UUID targetListId){
-        // hitta först rätt task med det UUID i denna listan
-        // spara den i en temporär variabel
-        // ta bort den från första listan
-        // hitta rätt lista med rätt UUID
-        // lägg till task i dens lista
-
-        Task taskToMove = null;
-        for(TaskList tasklist: taskLists){
-            for(Task task: tasklist.getTasks()){
-                if(task.getId() == taskId){
-                    taskToMove = task;
-                    tasklist.removeTask(task.getId());
-                    break;
-                }
-            }
-        }
-        for(TaskList tasklist: taskLists){
-            if(tasklist.getId() == targetListId){
-                tasklist.addTask(taskToMove);
-                break;
-            }
-        }
+    public void moveTask(Task task, UUID targetListId){
+        task.changeListId(targetListId);
     }
 }
