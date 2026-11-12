@@ -9,10 +9,10 @@ public class TaskList {
     private final UUID id;
     private Integer position;
 
-    public TaskList(String title){
+    public TaskList(String title, Integer position){
         this.title = title;
         this.id = UUID.randomUUID();
-        this.position = 0;
+        this.position = position;
         this.tasks = new ArrayList<>();
     }
 
@@ -33,5 +33,8 @@ public class TaskList {
 
     public UUID getId(){
         return id;
+    }
+    public ArrayList<Task> getTasks(){
+        return tasks;
     }
 }

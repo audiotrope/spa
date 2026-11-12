@@ -46,6 +46,10 @@ public class Task {
         this.status = status;
     }
 
+    public void changeDeadline(LocalDate deadline){
+        this.deadline = deadline;
+    }
+
     public String getTitle(){
         return title;
     }
@@ -59,6 +63,11 @@ public class Task {
     }
     public UUID getId(){
         return id;
+    }
+    public UUID getOwnerId(){return ownerId;}
+
+    public Set<TaskAssignment> getAssignments() {
+        return assignments;
     }
 
     public void assignUser(UUID userId){
