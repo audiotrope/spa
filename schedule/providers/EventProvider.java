@@ -10,7 +10,10 @@ import java.net.http.HttpResponse.BodyHandler;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.ArrayList;
+
 import schedule.Event;
+import schedule.providers.IcsFile;
 import java.io.Console;
 import java.io.IOException;
 
@@ -41,7 +44,8 @@ public class EventProvider {
         return null;
     }
 
-    public static Event fromIcal(String link) {
+    public static ArrayList<Event> fromIcal(String link) {
+        
         Builder builder = HttpClient.newBuilder();
         HttpClient client = HttpClient.newHttpClient();
         BodyHandler<String> handler = BodyHandlers.ofString();
@@ -52,8 +56,11 @@ public class EventProvider {
                 .header("charset", "UTF-8")
                 .GET()
                 .build();
+        
         String icalString;
+
         HttpResponse<String> response;
+        IcsFile.scheduleFromString();
         try {
             response = client.send(request, handler);
             icalString = response.body();
