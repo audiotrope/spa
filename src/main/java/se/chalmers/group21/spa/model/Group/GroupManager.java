@@ -12,8 +12,8 @@ public class GroupManager {
         this.groups = new HashMap<>();
     }
 
-    public Group createGroup(String groupName, UUID creator){
-        return new Group(groupName, UUID.randomUUID(), creator);
+    public static Group createGroup(String groupName, UUID creator){
+        return new Group(groupName, creator);
     }
 
     public void joinGroup(UUID groupId, User user){
