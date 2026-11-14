@@ -2,13 +2,16 @@ package se.chalmers.group21.spa.model.ManagerTodo;
 
 import se.chalmers.group21.spa.model.Interfaces.BoardRepository;
 import se.chalmers.group21.spa.model.Interfaces.TaskRepository;
+import se.chalmers.group21.spa.model.entities.Board;
 import se.chalmers.group21.spa.model.entities.Task;
 import se.chalmers.group21.spa.model.enums.Status;
 import se.chalmers.group21.spa.model.enums.TaskType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class TaskManager {
@@ -20,65 +23,135 @@ public class TaskManager {
         this.boardRepository = boardRepository;
     }
 
-    public void createTask(String title, String description, LocalDate deadline, TaskType type, UUID ownerId, UUID boardId, UUID listId){
-        Task task = new Task(title, description, deadline, type, ownerId, boardId, listId);
+    public Task createPersonalTask(
+            String title,
+            String description,
+            LocalDate deadline,
+            UUID ownerId) {
+
+        Task task = Task.createPersonal(
+                title,
+                description,
+                deadline,
+                ownerId
+        );
+
         taskRepository.save(task);
+        return task;
     }
-    public void deleteTask(UUID boardId, UUID taskId){
-        Task task = taskRepository.findById(taskId);
-        task.changeListId(null);
+    public void updateTask(
+            UUID taskId,
+            String title,
+            String description,
+            Status status,
+            LocalDate deadline) {
+
+        Task task = getTaskById(taskId);
+
+        task.changeTitle(title);
+        task.changeDescription(description);
+        task.changeStatus(status);
+        task.changeDeadline(deadline);
+
         taskRepository.save(task);
     }
 
-    public void changeDescription(String description, UUID taskId){
-        Task task = taskRepository.findById(taskId);
+    public Task createGroupTask(
+            String title,
+            String description,
+            LocalDate deadline,
+            UUID boardId,
+            UUID listId,
+            Set<UUID> assignedUserIds) { //AI
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+
+        if (!board.containsList(listId)) {
+            throw new IllegalArgumentException(
+                    "TaskList does not belong to this board");
+        }
+
+        Task task = Task.createGroup(
+                title,
+                description,
+                deadline,
+                boardId,
+                listId,
+                assignedUserIds
+        );
+
+        taskRepository.save(task);
+        return task;
+    }
+
+    public void deleteTask(UUID taskId) {
+        getTaskById(taskId);
+        taskRepository.delete(taskId);
+    }
+
+    public void changeDescription(String description, UUID taskId) {
+        Task task = getTaskById(taskId);
         task.changeDescription(description);
         taskRepository.save(task);
     }
 
-    public void changeTitle(String title, UUID taskId){
-        Task task = taskRepository.findById(taskId);
+    public void changeTitle(String title, UUID taskId) {
+        Task task = getTaskById(taskId);
         task.changeTitle(title);
         taskRepository.save(task);
     }
-    public void changeDeadline(LocalDate deadline, UUID taskId){
-        Task task = taskRepository.findById(taskId);
+    public void changeDeadline(LocalDate deadline, UUID taskId) {
+        Task task = getTaskById(taskId);
         task.changeDeadline(deadline);
         taskRepository.save(task);
     }
 
-    public void changeStatus(Status status, UUID taskId){
-        Task task = taskRepository.findById(taskId);
+    public void changeStatus(Status status, UUID taskId) {
+        Task task = getTaskById(taskId);
         task.changeStatus(status);
         taskRepository.save(task);
     }
 
-    public List<Task> getTasksByListId(UUID listId){ // inte färdig
-        //Board board = boardRepository.findById(boardId);
-        //board.getTaskLists();
+    public List<Task> getTasksByListId(UUID listId) {
+        return taskRepository.findByListId(listId);
+    }
+
+    public List<Task> getPersonalTasks(UUID userId) {
         List<Task> tasks = new ArrayList<>();
+
+        tasks.addAll(
+                taskRepository.findPersonal(userId)
+        );
+
+        tasks.addAll(
+                taskRepository.findAssignedGroup(userId)
+        );
 
         return tasks;
     }
 
-    public List<Task> getPersonalTasks(UUID userId){
-        return List.of();
+    public Task getTaskById(UUID taskId) { //AI
+        return taskRepository.findById(taskId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Task not found"));
     }
 
-    public Task getTaskById(UUID taskId){
-        return taskRepository.findById(taskId);
+    public List<Task> getAssignedTasks(UUID userId) {
+        return taskRepository.findAssignedGroup(userId);
     }
 
-    public List<Task> getAssignedTasks(){
-        return List.of();
+    public void assignUser(UUID taskId, UUID userId) {
+        Task task = getTaskById(taskId);
+        task.assignUser(userId);
+        taskRepository.save(task);
     }
 
-    public void assignUser(){
-
-    }
-
-    public void unassignuser(){
-
+    public void unassignUser(UUID taskId, UUID userId) {
+        Task task = getTaskById(taskId);
+        task.unassignUser(userId);
+        taskRepository.save(task);
     }
 
 }

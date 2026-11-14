@@ -5,6 +5,7 @@ import se.chalmers.group21.spa.model.entities.Board;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class InMemoryBoard implements BoardRepository {
@@ -21,17 +22,13 @@ public class InMemoryBoard implements BoardRepository {
     }
 
     @Override
-    public Board findById(UUID id) {
-        return boards.get(id);
+    public Optional<Board> findById(UUID id) {
+        return Optional.ofNullable(boards.get(id)); //AI ish, samma som InMemoryTask
     }
 
     @Override
-    public Board findByGroup(UUID groupId) {
-        for(Board board: boards.values()){
-            if(board.getGroupId() == groupId){
-                return board;
-            }
-        }
-        return null;
+    public Optional<Board> findByGroupId(UUID groupId) {
+        return Optional.empty();
     }
+
 }

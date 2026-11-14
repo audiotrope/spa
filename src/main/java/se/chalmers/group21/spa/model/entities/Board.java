@@ -34,4 +34,9 @@ public class Board {
     public void moveTask(Task task, UUID targetListId){
         task.changeListId(targetListId);
     }
+
+    public boolean containsList(UUID listId) {
+        return taskLists.stream()
+                .anyMatch(list -> list.getId().equals(listId));
+    }
 }

@@ -17,42 +17,105 @@ public class BoardManager {
         this.taskRepository = taskRepository;
         this.boardRepository = boardRepository;
     }
-    public void createBoard(UUID groupId){
+    public Board createBoard(UUID groupId){
        Board board = new Board(groupId);
        boardRepository.save(board);
-    }
-    public void createTaskList(UUID boardId, String title){
-        Board board = boardRepository.findById(boardId);
-        TaskList taskList = new TaskList(title, board.getTaskLists().size());
-        board.addList(taskList);
-        boardRepository.save(board);
+       return board;
     }
 
-    public void deleteTaskList(UUID boardId, TaskList taskList){
-        Board board = boardRepository.findById(boardId);
+    public TaskList createTaskList(UUID boardId, String title) { //AI
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+
+        TaskList taskList = new TaskList(
+                title,
+                board.getTaskLists().size()
+        );
+
+        board.addList(taskList);
+        boardRepository.save(board);
+
+        return taskList;
+    }
+
+    public void deleteTaskList(UUID boardId, TaskList taskList) { //Ai
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+
         board.removeList(taskList.getId());
         boardRepository.save(board);
     }
 
-    public void renameTaskList(UUID boardId, TaskList wantedTaskList, String title){
-        Board board = boardRepository.findById(boardId);
-        List<TaskList> tasklists = board.getTaskLists();
-        for(TaskList tasklist: tasklists){
-            if(tasklist.getId() == wantedTaskList.getId()){
-                tasklist.rename(title);
+    public void renameTaskList( //AI
+            UUID boardId,
+            TaskList wantedTaskList,
+            String title) {
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+
+        List<TaskList> taskLists = board.getTaskLists();
+
+        for (TaskList taskList : taskLists) {
+            if (taskList.getId().equals(wantedTaskList.getId())) {
+                taskList.rename(title);
+                boardRepository.save(board);
+                return;
             }
         }
-        boardRepository.save(board);
+
+        throw new IllegalArgumentException("TaskList not found");
     }
-    public void moveTask(UUID boardId, UUID taskId, UUID taskListId){
-        Board board = boardRepository.findById(boardId);
-        Task task = taskRepository.findById(taskId);
+
+    public void moveTask(UUID boardId, UUID taskId, UUID taskListId) { //AI
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Task not found"));
+
         board.moveTask(task, taskListId);
-        boardRepository.save(board);
+
         taskRepository.save(task);
     }
 
-    public void reoderTasklist(){ // osäker
+    public void reorderTaskList(UUID boardId, UUID listId, int newPosition) {//AI
 
+        Board board = getBoardById(boardId);
+
+        TaskList taskList = board.getTaskLists().stream()
+                .filter(list -> list.getId().equals(listId))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException("TaskList not found"));
+
+        taskList.reorder(newPosition);
+        boardRepository.save(board);
     }
+
+    public List<TaskList> getTaskLists(UUID boardId) {
+        Board board = getBoardById(boardId);
+        return List.copyOf(board.getTaskLists());
+    }
+
+    public Board getBoardById(UUID boardId) { // AI
+        return boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+    }
+
+    public Board getBoardByGroupId(UUID groupId) { //AI
+        return boardRepository.findByGroupId(groupId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Board not found"));
+    }
+
 }

@@ -70,9 +70,8 @@ public class Task {
     }
 
     public Set<TaskAssignment> getAssignments() {
-        return assignments;
+        return Set.copyOf(assignments);
     }
-
     public void changeListId(UUID listId){
         this.listId = listId;
     }
@@ -89,10 +88,62 @@ public class Task {
        }
        assignments.add(new TaskAssignment(userId));
     }
+    public String getDescription() {
+        return description;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public UUID getBoardId() {
+        return boardId;
+    }
 
     public void unassignUser(UUID userId){
         assignments.removeIf(
                 user -> user.getUserId().equals(userId)
         );
+    }
+    public static Task createPersonal( //AI
+            String title,
+            String description,
+            LocalDate deadline,
+            UUID ownerId) {
+
+        return new Task(
+                title,
+                description,
+                deadline,
+                TaskType.PERSONAL,
+                ownerId,
+                null,
+                null
+        );
+    }
+
+    public static Task createGroup(
+            String title,
+            String description,
+            LocalDate deadline,
+            UUID boardId,
+            UUID listId,
+            Set<UUID> assignedUserIds) {
+
+        Task task = new Task(
+                title,
+                description,
+                deadline,
+                TaskType.GROUP,
+                null,
+                boardId,
+                listId
+        );
+
+        for (UUID userId : assignedUserIds) {
+            task.assignUser(userId);
+        }
+
+        return task;
     }
 }

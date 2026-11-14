@@ -4,6 +4,7 @@ import se.chalmers.group21.spa.model.Interfaces.TaskRepository;
 import se.chalmers.group21.spa.model.entities.Board;
 import se.chalmers.group21.spa.model.entities.Task;
 import se.chalmers.group21.spa.model.entities.TaskAssignment;
+import se.chalmers.group21.spa.model.enums.TaskType;
 
 import java.util.*;
 
@@ -16,8 +17,8 @@ public class InMemoryTask implements TaskRepository {
     }
 
     @Override
-    public Task findById(UUID id) {
-        return tasks.get(id);
+    public Optional<Task> findById(UUID id) { //AI
+        return Optional.ofNullable(tasks.get(id));
     }
 
     @Override
@@ -26,23 +27,27 @@ public class InMemoryTask implements TaskRepository {
     }
 
     @Override
-    public List<Task> findPersonal(UUID userId) { // kanske ska vara ett set istället för list?
-        List<Task> personal = new ArrayList<>();
-        for(Task task: tasks.values()){
-            if (task.getOwnerId() == userId){
-                personal.add(task);
-            }
-            for(TaskAssignment user: task.getAssignments()){
-                if(user.getUserId() == userId){
-                    personal.add(task);
-                }
-            }
-        }
-        return personal;
+    public List<Task> findByListId(UUID listId) {
+        return tasks.values().stream()
+                .filter(task -> listId.equals(task.getListId()))
+                .toList();
     }
 
     @Override
-    public List<Task> findAssignedGroup(UUID userId) { // vet inte riktigt denna ännu
-        return List.of();
+    public List<Task> findPersonal(UUID userId) { //AI
+        return tasks.values().stream()
+                .filter(task -> task.getType() == TaskType.PERSONAL)
+                .filter(task -> userId.equals(task.getOwnerId()))
+                .toList();
+    }
+
+    @Override
+    public List<Task> findAssignedGroup(UUID userId) { //AI
+        return tasks.values().stream()
+                .filter(task -> task.getType() == TaskType.GROUP)
+                .filter(task -> task.getAssignments().stream()
+                        .anyMatch(assignment ->
+                                userId.equals(assignment.getUserId())))
+                .toList();
     }
 }
