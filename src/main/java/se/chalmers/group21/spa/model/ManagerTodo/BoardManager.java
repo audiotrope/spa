@@ -17,10 +17,17 @@ public class BoardManager {
         this.taskRepository = taskRepository;
         this.boardRepository = boardRepository;
     }
-    public Board createBoard(UUID groupId){
-       Board board = new Board(groupId);
-       boardRepository.save(board);
-       return board;
+    public Board createBoard(UUID groupId) { //AI
+
+        if (boardRepository.findByGroupId(groupId).isPresent()) {
+            throw new IllegalArgumentException(
+                    "Group already has a board");
+        }
+
+        Board board = new Board(groupId);
+        boardRepository.save(board);
+
+        return board;
     }
 
     public TaskList createTaskList(UUID boardId, String title) { //AI
@@ -40,11 +47,18 @@ public class BoardManager {
         return taskList;
     }
 
-    public void deleteTaskList(UUID boardId, TaskList taskList) { //Ai
+    public void deleteTaskList(UUID boardId, TaskList taskList) { //AI
 
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Board not found"));
+        Board board = getBoardById(boardId);
+
+        if (!board.containsList(taskList.getId())) {
+            throw new IllegalArgumentException("TaskList not found");
+        }
+
+        if (!taskRepository.findByListId(taskList.getId()).isEmpty()) {
+            throw new IllegalStateException(
+                    "Cannot delete a list that contains tasks");
+        }
 
         board.removeList(taskList.getId());
         boardRepository.save(board);
@@ -87,17 +101,11 @@ public class BoardManager {
         taskRepository.save(task);
     }
 
-    public void reorderTaskList(UUID boardId, UUID listId, int newPosition) {//AI
-
+    public void reorderTaskList(UUID boardId, UUID listId, int newPosition) {
         Board board = getBoardById(boardId);
 
-        TaskList taskList = board.getTaskLists().stream()
-                .filter(list -> list.getId().equals(listId))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("TaskList not found"));
+        board.reorderTaskList(listId, newPosition);
 
-        taskList.reorder(newPosition);
         boardRepository.save(board);
     }
 

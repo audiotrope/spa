@@ -16,7 +16,7 @@ public class Task {
     private final UUID id;
     private LocalDate deadline;
     private Set<TaskAssignment> assignments;
-    private TaskType type;
+    private final TaskType type;
     private final UUID boardId;
     private UUID listId;
     private final UUID ownerId;
@@ -122,7 +122,7 @@ public class Task {
         );
     }
 
-    public static Task createGroup(
+    public static Task createGroup( //AI
             String title,
             String description,
             LocalDate deadline,
@@ -140,8 +140,10 @@ public class Task {
                 listId
         );
 
-        for (UUID userId : assignedUserIds) {
-            task.assignUser(userId);
+        if (assignedUserIds != null) {
+            for (UUID userId : assignedUserIds) {
+                task.assignUser(userId);
+            }
         }
 
         return task;
