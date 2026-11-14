@@ -105,47 +105,17 @@ public class Task {
                 user -> user.getUserId().equals(userId)
         );
     }
-    public static Task createPersonal( //AI
-            String title,
-            String description,
-            LocalDate deadline,
-            UUID ownerId) {
-
-        return new Task(
-                title,
-                description,
-                deadline,
-                TaskType.PERSONAL,
-                ownerId,
-                null,
-                null
-        );
+    public static Task createPersonal(String title, String description, LocalDate deadline, UUID ownerId) { //AI
+        return new Task(title, description, deadline, TaskType.PERSONAL, ownerId, null, null);
     }
 
-    public static Task createGroup( //AI
-            String title,
-            String description,
-            LocalDate deadline,
-            UUID boardId,
-            UUID listId,
-            Set<UUID> assignedUserIds) {
-
-        Task task = new Task(
-                title,
-                description,
-                deadline,
-                TaskType.GROUP,
-                null,
-                boardId,
-                listId
-        );
-
+    public static Task createGroup(String title, String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds) { //AI
+        Task task = new Task(title, description, deadline, TaskType.GROUP, null, boardId, listId);
         if (assignedUserIds != null) {
             for (UUID userId : assignedUserIds) {
                 task.assignUser(userId);
             }
         }
-
         return task;
     }
 }

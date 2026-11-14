@@ -1,9 +1,7 @@
 package se.chalmers.group21.spa.model.Memory;
 
 import se.chalmers.group21.spa.model.Interfaces.TaskRepository;
-import se.chalmers.group21.spa.model.entities.Board;
 import se.chalmers.group21.spa.model.entities.Task;
-import se.chalmers.group21.spa.model.entities.TaskAssignment;
 import se.chalmers.group21.spa.model.enums.TaskType;
 
 import java.util.*;

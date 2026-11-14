@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public interface BoardRepository {
     void save(Board board);
-    void delete(UUID id);
     Optional<Board> findById(UUID id);
     Optional<Board> findByGroupId(UUID groupId);
 }

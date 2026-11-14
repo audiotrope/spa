@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class PersonalTaskManager {
+public class PersonalTaskManager { //AI
 
     private TaskRepository taskRepository;
 
@@ -18,25 +18,17 @@ public class PersonalTaskManager {
     }
 
     public List<Task> getPersonalTasks(UUID userId) {
-
         List<Task> personalTasks =
                 taskRepository.findPersonal(userId);
-
         List<Task> assignedTasks =
                 taskRepository.findAssignedGroup(userId);
-
-        // Samla båda typerna i samma lista.
-        // LinkedHashMap förhindrar dubbletter baserat på taskens ID.
         Map<UUID, Task> tasks = new LinkedHashMap<>();
-
         for (Task task : personalTasks) {
             tasks.put(task.getId(), task);
         }
-
         for (Task task : assignedTasks) {
             tasks.put(task.getId(), task);
         }
-
         return new ArrayList<>(tasks.values());
     }
 }
