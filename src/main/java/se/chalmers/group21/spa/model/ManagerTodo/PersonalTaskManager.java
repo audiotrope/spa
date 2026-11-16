@@ -11,17 +11,15 @@ import java.util.UUID;
 
 public class PersonalTaskManager { //AI
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public PersonalTaskManager(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
     public List<Task> getPersonalTasks(UUID userId) {
-        List<Task> personalTasks =
-                taskRepository.findPersonal(userId);
-        List<Task> assignedTasks =
-                taskRepository.findAssignedGroup(userId);
+        List<Task> personalTasks = taskRepository.findPersonal(userId);
+        List<Task> assignedTasks = taskRepository.findAssignedGroup(userId);
         Map<UUID, Task> tasks = new LinkedHashMap<>();
         for (Task task : personalTasks) {
             tasks.put(task.getId(), task);

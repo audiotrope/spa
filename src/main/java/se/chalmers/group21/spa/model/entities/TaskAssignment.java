@@ -3,6 +3,14 @@ package se.chalmers.group21.spa.model.entities;
 import java.util.Objects;
 import java.util.UUID;
 
+/*
+Created by: Thyra Öfverström
+    This class represents the assignments of a group task to a specific user. It does this by storing the unique ID
+    of the assigned user. It also allows multiple users to be assignedto the same group task. It also prevents the same
+    user from being assigned multiple times to the same task.
+
+    Methods genereated by AI: equals(Object obj)
+ */
 public class TaskAssignment {
     private final UUID userId;
 
@@ -14,8 +22,9 @@ public class TaskAssignment {
         return userId;
     }
 
+    //AI
     @Override
-    public boolean equals(Object obj) { //AI
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }

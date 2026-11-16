@@ -17,11 +17,6 @@ public class InMemoryBoard implements BoardRepository {
     }
 
     @Override
-    public void delete(UUID id) {
-        boards.remove(id);
-    }
-
-    @Override
     public Optional<Board> findById(UUID id) {
         return Optional.ofNullable(boards.get(id)); //AI ish, samma som InMemoryTask
     }

@@ -1,6 +1,5 @@
 package se.chalmers.group21.spa.model.entities;
 
-
 import se.chalmers.group21.spa.model.enums.Status;
 import se.chalmers.group21.spa.model.enums.TaskType;
 
@@ -8,6 +7,20 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
+/*
+Created by: Thyra Öfverström
+    This class represents an individual task, it can be either personal och group-related.It stores information sush
+    as title, description, status, deadline and tasktype.
+    For personal tasks: it stores the unique ID of the user who owns the task.
+    For group tasks: it stores the board and list IDs and managers its assignments.
+    A Task handles changes to its own state, such as title, status, deadline and description. It also determines whether
+    a task is overdue or approaching its deadline (for dynamic change without users input).
+
+    Methods genereated by AI: assignUser(UUID userId),
+    createPersonal(String title, String description, LocalDate deadline, UUID ownerId),
+    createGroup(String title, String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds)
+ */
 
 public class Task {
     private String title;
@@ -31,7 +44,7 @@ public class Task {
         this.ownerId = ownerId;
         this.boardId = boardId;
         this.listId = listId;
-        this.assignments = new HashSet<TaskAssignment>();
+        this.assignments = new HashSet<>();
     }
 
     public void changeDescription(String description){
@@ -69,12 +82,22 @@ public class Task {
         return listId;
     }
 
+    public boolean overDeadline(){
+        return deadline != null && !deadline.isAfter(LocalDate.now());
+    }
+
+    public boolean isDeadlineSoon(){
+        return deadline != null && deadline.isAfter(LocalDate.now()) && !deadline.isAfter(LocalDate.now().plusDays(3));
+    }
+
     public Set<TaskAssignment> getAssignments() {
         return Set.copyOf(assignments);
     }
     public void changeListId(UUID listId){
         this.listId = listId;
     }
+
+    //AI
     public void assignUser(UUID userId){
        if (type != TaskType.GROUP){
             throw new IllegalStateException(
@@ -83,11 +106,12 @@ public class Task {
        }
        if (userId == null){
            throw new IllegalStateException(
-                   "User ID can not bu null"
+                   "User ID can not be null"
            );
        }
        assignments.add(new TaskAssignment(userId));
     }
+
     public String getDescription() {
         return description;
     }
@@ -101,15 +125,16 @@ public class Task {
     }
 
     public void unassignUser(UUID userId){
-        assignments.removeIf(
-                user -> user.getUserId().equals(userId)
-        );
+        assignments.removeIf(user -> user.getUserId().equals(userId));
     }
-    public static Task createPersonal(String title, String description, LocalDate deadline, UUID ownerId) { //AI
+
+    //AI
+    public static Task createPersonal(String title, String description, LocalDate deadline, UUID ownerId) {
         return new Task(title, description, deadline, TaskType.PERSONAL, ownerId, null, null);
     }
 
-    public static Task createGroup(String title, String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds) { //AI
+    //AI
+    public static Task createGroup(String title, String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds) {
         Task task = new Task(title, description, deadline, TaskType.GROUP, null, boardId, listId);
         if (assignedUserIds != null) {
             for (UUID userId : assignedUserIds) {

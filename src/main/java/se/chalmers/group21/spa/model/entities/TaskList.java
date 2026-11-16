@@ -1,7 +1,12 @@
 package se.chalmers.group21.spa.model.entities;
 
-import java.util.ArrayList;
 import java.util.UUID;
+
+/*
+Created by: Thyra Öfverström
+    Represents a customizable list on a board with a title this can be for example "To do", "Backlog" ect. It stores its
+    title unique ID and position on the board. It also handles renaming and reordering itself.
+ */
 
 public class TaskList {
     private String title;

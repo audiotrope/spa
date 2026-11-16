@@ -3,6 +3,15 @@ package se.chalmers.group21.spa.model.entities;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/*
+Created by: Thyra Öfverström
+    This class represents a board belonging to a specific group. It contains and managers the task lists beloning to the
+    board. It also handles operations such as addning, removning and reordering task lists. When moving tasks it
+    validates that tasks are moved to a valid list within the board.
+
+    Methods genereated by AI: reorderTaskList(UUID listId, int newPosition), moveTask(Task task, UUID targetListId)
+ */
+
 public class Board {
     private ArrayList<TaskList> taskLists;
     private final UUID id;
@@ -12,7 +21,7 @@ public class Board {
             this.groupId = groupId;
             this.id = UUID.randomUUID();
             this.taskLists = new ArrayList<>();
-        }
+   }
 
     public void addList(TaskList list){
         taskLists.add(list);
@@ -36,7 +45,8 @@ public class Board {
         return taskLists;
     }
 
-    public void moveTask(Task task, UUID targetListId) { //AI
+    //AI
+    public void moveTask(Task task, UUID targetListId) {
         if (task == null) {
             throw new IllegalArgumentException("Task cannot be null");
         }
@@ -58,7 +68,8 @@ public class Board {
                 .anyMatch(list -> list.getId().equals(listId));
     }
 
-    public void reorderTaskList(UUID listId, int newPosition) { //AI
+    //AI
+    public void reorderTaskList(UUID listId, int newPosition) {
         if (newPosition < 0 || newPosition >= taskLists.size()) {
             throw new IllegalArgumentException("Invalid position");
         }

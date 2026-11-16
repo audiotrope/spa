@@ -9,6 +9,18 @@ import se.chalmers.group21.spa.model.entities.TaskList;
 import java.util.List;
 import java.util.UUID;
 
+/*
+Created by: Thyra Öfverström
+    This class handles board related operations. It creates and retrieves boards associated whit groups. It also
+    creates, deletes, renames and reoder task lists. It also handles moving tasks between lists on a board. Board and
+    task repositories are used to access presist data.
+
+    Methods genereated by AI: createBoard(UUID groupId), createTaskList(UUID boardId, String title),
+    deleteTaskList(UUID boardId, TaskList taskList), renameTaskList(UUID boardId, TaskList wantedTaskList, String title),
+    moveTask(UUID boardId, UUID taskId, UUID taskListId), getBoardById(UUID boardId),
+    getBoardByGroupId(UUID groupId)
+ */
+
 public class BoardManager {
     private final BoardRepository boardRepository;
     private final TaskRepository taskRepository;
@@ -17,7 +29,9 @@ public class BoardManager {
         this.taskRepository = taskRepository;
         this.boardRepository = boardRepository;
     }
-    public Board createBoard(UUID groupId) { //AI
+
+    //AI
+    public Board createBoard(UUID groupId) {
         if (boardRepository.findByGroupId(groupId).isPresent()) {
             throw new IllegalArgumentException(
                     "Group already has a board");
@@ -27,7 +41,8 @@ public class BoardManager {
         return board;
     }
 
-    public TaskList createTaskList(UUID boardId, String title) { //AI
+    //AI
+    public TaskList createTaskList(UUID boardId, String title) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Board not found"));
@@ -37,7 +52,8 @@ public class BoardManager {
         return taskList;
     }
 
-    public void deleteTaskList(UUID boardId, TaskList taskList) { //AI
+    //AI
+    public void deleteTaskList(UUID boardId, TaskList taskList) {
         Board board = getBoardById(boardId);
         if (!board.containsList(taskList.getId())) {
             throw new IllegalArgumentException("TaskList not found");
@@ -50,7 +66,8 @@ public class BoardManager {
         boardRepository.save(board);
     }
 
-    public void renameTaskList(UUID boardId, TaskList wantedTaskList, String title) { // AI
+    //AI
+    public void renameTaskList(UUID boardId, TaskList wantedTaskList, String title) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Board not found"));
@@ -65,7 +82,8 @@ public class BoardManager {
         throw new IllegalArgumentException("TaskList not found");
     }
 
-    public void moveTask(UUID boardId, UUID taskId, UUID taskListId) { //AI
+    //AI
+    public void moveTask(UUID boardId, UUID taskId, UUID taskListId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Board not found"));
@@ -87,13 +105,15 @@ public class BoardManager {
         return List.copyOf(board.getTaskLists());
     }
 
-    public Board getBoardById(UUID boardId) { // AI
+    //AI
+    public Board getBoardById(UUID boardId) {
         return boardRepository.findById(boardId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Board not found"));
     }
 
-    public Board getBoardByGroupId(UUID groupId) { //AI
+    //AI
+    public Board getBoardByGroupId(UUID groupId) {
         return boardRepository.findByGroupId(groupId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Board not found"));

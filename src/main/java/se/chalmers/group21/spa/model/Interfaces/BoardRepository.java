@@ -5,6 +5,12 @@ import se.chalmers.group21.spa.model.entities.Board;
 import java.util.Optional;
 import java.util.UUID;
 
+/*
+Created by: Thyra Öfverström
+    This interface defines the operations used to store, retrieve and delete boards. It provides methods for finding
+    boards by their ID or associated group. It separates board management from the underlying data storage implementation.
+ */
+
 public interface BoardRepository {
     void save(Board board);
     Optional<Board> findById(UUID id);
