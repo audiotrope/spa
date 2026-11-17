@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import se.chalmers.group21.spa.model.entities.Board;
 import se.chalmers.group21.spa.model.entities.Task;
 import se.chalmers.group21.spa.model.entities.TaskList;
-import se.chalmers.group21.spa.model.enums.TaskType;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 public class BoardTest {
@@ -56,14 +56,13 @@ public class BoardTest {
 
     @Test
     void testMoveTask(){
-        UUID personalId = UUID.randomUUID();
         UUID groupId = UUID.randomUUID();
         Board board = new Board(groupId);
         TaskList taskListOne = new TaskList("Test tasklist", 0);
         TaskList taskListSecond = new TaskList("Test another tasklist", 1);
         board.addList(taskListOne);
         board.addList(taskListSecond);
-        Task task = new Task("Test", "testing methods", LocalDate.parse("2026-11-30"), TaskType.PERSONAL,personalId, board.getId(), taskListOne.getId());
+        Task task = Task.createGroup("Test", "testing", LocalDate.parse("2026-11-30"), board.getId(), taskListOne.getId(), Set.of());
         board.moveTask(task, taskListSecond.getId());
 
         assertEquals(task.getListId(), taskListSecond.getId());
@@ -71,13 +70,12 @@ public class BoardTest {
 
     @Test
     void testMoveTaskInvalidList(){
-        UUID personalId = UUID.randomUUID();
         UUID groupId = UUID.randomUUID();
         UUID invalidListId = UUID.randomUUID();
         Board board = new Board(groupId);
         TaskList taskListOne = new TaskList("Test tasklist", 0);
         board.addList(taskListOne);
-        Task task = new Task("Test", "testing methods", LocalDate.parse("2026-11-30"), TaskType.PERSONAL,personalId, board.getId(), taskListOne.getId());
+        Task task = Task.createGroup("Test", "testing", LocalDate.parse("2026-11-30"), board.getId(), taskListOne.getId(), Set.of());
 
         assertThrows(IllegalArgumentException.class,
                 () -> board.moveTask(task, invalidListId));
@@ -86,7 +84,6 @@ public class BoardTest {
 
     @Test
     void testMoveTaskAnotherBoard(){
-        UUID personalId = UUID.randomUUID();
         UUID groupIdOne = UUID.randomUUID();
         UUID groupIdTwo = UUID.randomUUID();
         Board boardGroupOne = new Board(groupIdOne);
@@ -95,7 +92,7 @@ public class BoardTest {
         TaskList taskListTwo = new TaskList("Test tasklist for group 2", 0);
         boardGroupOne.addList(taskListOne);
         boardGroupTwo.addList(taskListTwo);
-        Task taskOne = new Task("Test", "testing methods", LocalDate.parse("2026-11-30"), TaskType.PERSONAL,personalId, boardGroupOne.getId(), taskListOne.getId());
+        Task taskOne = Task.createGroup("Test", "testing", LocalDate.parse("2026-11-30"), boardGroupOne.getId(), taskListOne.getId(), Set.of());
 
         assertThrows(IllegalArgumentException.class,
                 () -> boardGroupOne.moveTask(taskOne, taskListTwo.getId()));
