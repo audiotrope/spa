@@ -21,6 +21,7 @@ public class Event {
         this.eventName = eventName;
         this.activity = activity;
         this.locations = locations;
+        
 
     }
 
