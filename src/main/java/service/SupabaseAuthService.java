@@ -30,6 +30,7 @@ public class SupabaseAuthService implements AuthService{
     private final URI signInUri;
     private final URI refreshUri;
     private final String publishableKey;
+    private Session session;
 
     // For reference see: https://supabase.github.io/auth/#post-token
 
@@ -45,14 +46,23 @@ public class SupabaseAuthService implements AuthService{
     }
 
     @Override
-    public Session signIn(String email, String password)
+    public synchronized Session signIn(String email, String password)
         throws IOException, InterruptedException, SignInException {
 
         String response = callApi(signInUri, new Credentials(email, password), SignInException::new);
 
-        return getUserSession(response);
+        session = getUserSession(response);
+        return session;
     }
 
+    /**
+     * Renew the user session
+     * @param refresh_token token that is supplied in the user object
+     * @return A new user session with a new access token
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws RefreshTokenException
+     */
     public Session renewSession(String refresh_token)
             throws IOException, InterruptedException, RefreshTokenException {
         String response = callApi(refreshUri, Map.of("refresh_token", refresh_token), RefreshTokenException::new);
@@ -60,6 +70,12 @@ public class SupabaseAuthService implements AuthService{
         return getUserSession(response);
     }
 
+    /**
+     * Gets the user session
+     * @param response The supabase response that should include the user object
+     * @return Session containing the user object and the access tokens
+     * @throws IOException If the supplied response is incorrect or malfomred
+     */
     private Session getUserSession(String response) throws IOException{
         TokenResponse tokens;
         try {
@@ -85,6 +101,17 @@ public class SupabaseAuthService implements AuthService{
                 Instant.now().plusSeconds(tokens.expiresIn()));
     }
 
+    /**
+     * Sends a JSON POST request to a Supabase Auth endpoint.
+     * @param <E> the exception type created for a non-200 response
+     * @param endpoint the URI to send the request to
+     * @param content the object to serialize as the JSON request body
+     * @param exceptionFactory a function that creates an exception from the HTTP status code
+     * @return the response body when the status is HTTP 200
+     * @throws IOException if sending the request or reading the response fails
+     * @throws InterruptedException if the thread is interrupted while waiting for the response
+     * @throws E if Supabase returns a status other than HTTP 200
+    */
     private <E extends Exception> String callApi(URI endpoint, Object Content, IntFunction<E> exceptionFactory)
             throws IOException, InterruptedException, E {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
@@ -102,6 +129,25 @@ public class SupabaseAuthService implements AuthService{
         }
 
         return response.body();
+    }
+
+    /**
+     * Gets the user access token, checks beforehand if its expired, if it is renew it.
+     * @return The access token
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws RefreshTokenException
+     */
+    private String getAcessToken() throws IOException, InterruptedException, RefreshTokenException {
+        if (session == null) {
+            throw new IllegalStateException("You need to be logged in before refreshing a session");
+        }
+
+        if (!session.expiresAt().isAfter(Instant.now().minusSeconds(30))) {
+            session = renewSession(session.refreshToken());
+        }
+
+        return session.accessToken();
     }
 
     ///  Fancy environemnet variable getter
