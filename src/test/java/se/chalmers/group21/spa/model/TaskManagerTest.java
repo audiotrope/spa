@@ -16,7 +16,7 @@ public class TaskManagerTest {
     void testUpdateTask(){}
 
     @Test
-    void testDeletetask(){}
+    void testDeleteTask(){}
 
     @Test
     void testAssignUser(){}
