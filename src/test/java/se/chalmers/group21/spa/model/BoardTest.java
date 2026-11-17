@@ -1,10 +1,14 @@
 package se.chalmers.group21.spa.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import se.chalmers.group21.spa.model.entities.Board;
+import se.chalmers.group21.spa.model.entities.Task;
 import se.chalmers.group21.spa.model.entities.TaskList;
+import se.chalmers.group21.spa.model.enums.TaskType;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class BoardTest {
@@ -52,25 +56,77 @@ public class BoardTest {
 
     @Test
     void testMoveTask(){
+        UUID personalId = UUID.randomUUID();
         UUID groupId = UUID.randomUUID();
         Board board = new Board(groupId);
         TaskList taskListOne = new TaskList("Test tasklist", 0);
         TaskList taskListSecond = new TaskList("Test another tasklist", 1);
         board.addList(taskListOne);
         board.addList(taskListSecond);
+        Task task = new Task("Test", "testing methods", LocalDate.parse("2026-11-30"), TaskType.PERSONAL,personalId, board.getId(), taskListOne.getId());
+        board.moveTask(task, taskListSecond.getId());
 
-        //inte klar
+        assertEquals(task.getListId(), taskListSecond.getId());
     }
 
     @Test
-    void testMoveTaskInvalidList(){}
+    void testMoveTaskInvalidList(){
+        UUID personalId = UUID.randomUUID();
+        UUID groupId = UUID.randomUUID();
+        UUID invalidListId = UUID.randomUUID();
+        Board board = new Board(groupId);
+        TaskList taskListOne = new TaskList("Test tasklist", 0);
+        board.addList(taskListOne);
+        Task task = new Task("Test", "testing methods", LocalDate.parse("2026-11-30"), TaskType.PERSONAL,personalId, board.getId(), taskListOne.getId());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> board.moveTask(task, invalidListId));
+        assertEquals(taskListOne.getId(), task.getListId());
+    }
 
     @Test
-    void testMoveTaskAnotherBoard(){}
+    void testMoveTaskAnotherBoard(){
+        UUID personalId = UUID.randomUUID();
+        UUID groupIdOne = UUID.randomUUID();
+        UUID groupIdTwo = UUID.randomUUID();
+        Board boardGroupOne = new Board(groupIdOne);
+        Board boardGroupTwo = new Board(groupIdTwo);
+        TaskList taskListOne = new TaskList("Test tasklist", 0);
+        TaskList taskListTwo = new TaskList("Test tasklist for group 2", 0);
+        boardGroupOne.addList(taskListOne);
+        boardGroupTwo.addList(taskListTwo);
+        Task taskOne = new Task("Test", "testing methods", LocalDate.parse("2026-11-30"), TaskType.PERSONAL,personalId, boardGroupOne.getId(), taskListOne.getId());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> boardGroupOne.moveTask(taskOne, taskListTwo.getId()));
+        assertEquals(taskListOne.getId(), taskOne.getListId());
+    }
 
     @Test
-    void testReorderTaskList(){}
+    void testReorderTaskList(){
+        UUID groupId = UUID.randomUUID();
+        Board board = new Board(groupId);
+        TaskList taskListOne = new TaskList("Test tasklist", 0);
+        TaskList taskListTwo = new TaskList("Test tasklist two", 1);
+        board.addList(taskListOne);
+        board.addList(taskListTwo);
+        board.reorderTaskList(taskListOne.getId(), 1);
+
+        assertEquals(1, taskListOne.getPosition());
+        assertEquals(0, taskListTwo.getPosition());
+    }
 
     @Test
-    void testReorderTaskListInvaligPosition(){}
+    void testReorderTaskListInvalidPosition(){
+        UUID groupId = UUID.randomUUID();
+        Board board = new Board(groupId);
+        TaskList taskListOne = new TaskList("Test tasklist", 0);
+        TaskList taskListTwo = new TaskList("Test tasklist two", 1);
+        board.addList(taskListOne);
+        board.addList(taskListTwo);
+
+        assertThrows(IllegalArgumentException.class,
+                () ->  board.reorderTaskList(taskListOne.getId(), 3));
+        assertEquals(0, taskListOne.getPosition());
+    }
 }
