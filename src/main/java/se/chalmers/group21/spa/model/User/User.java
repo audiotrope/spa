@@ -1,5 +1,6 @@
 package se.chalmers.group21.spa.model.User;
 
+import se.chalmers.group21.spa.model.Database.GroupRepo;
 import se.chalmers.group21.spa.model.Database.UserRepo;
 import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Group.GroupManager;
@@ -40,6 +41,16 @@ public class User {
         groupId.removeMember(userId);
 
     }
+    public void joinGroup(Group groupId){
+        groupId.addMember(userId);
+    }
+
+    public void joinGroup(String str){
+        UUID groupId = UUID.fromString(str);
+        Group group = GroupRepo.findById(groupId);
+        group.addMember(userId);
+    }
+
     public void createGroup(String groupname){
         GroupManager.createGroup(groupname, userId);
 

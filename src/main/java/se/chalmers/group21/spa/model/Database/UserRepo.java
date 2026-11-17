@@ -24,9 +24,9 @@ public class UserRepo {
         try(Connection conn = Database.connect();
         PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new User(rs.getObject("id", UUID.class), rs.getString("username"));
+            ResultSet rs = ps.executeQuery();                                                                       //
+            if (rs.next()) {                                                                                        // AI
+                return new User(rs.getObject("id", UUID.class), rs.getString("username"));   //
             }
             return null;
         }

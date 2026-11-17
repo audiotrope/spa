@@ -21,11 +21,8 @@ public class Group{
         members.put(creator, Roles.ADMIN);
         this.groupId = UUID.randomUUID();
         this.groupName = name;
-        try{
-            GroupRepo.save(this);
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        GroupRepo.save(this);
+        addMember(creator, Roles.ADMIN);
 
     }
 
@@ -33,14 +30,18 @@ public class Group{
         return groupId;
     }
 
-    void addMember(UUID newMember){
+    public void addMember(UUID newMember){
+       addMember(newMember, Roles.MEMBER);
+
+   }
+    public void addMember(UUID newMember, Roles role){
         //members.put(newMember, Roles.MEMBER);
         try{
-            GroupRepo.addMember(groupId, newMember, Roles.MEMBER);
+            GroupRepo.addMember(groupId, newMember, role);
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
-   }
+    }
 
     public void removeMember(UUID memberToRemove){
        //members.remove(memberToRemove);
@@ -59,6 +60,7 @@ public class Group{
        return members.get(user) == Roles.ADMIN;
 
     }
+
     //TODO get members
 
    public void changeRole(UUID currentUser, UUID userToChange, Roles role) {

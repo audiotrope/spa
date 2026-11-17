@@ -4,39 +4,25 @@ import se.chalmers.group21.spa.model.Group.Roles;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import static org.postgresql.core.Oid.UUID;
+
 
 public class GroupRepo {
-    public static void save (Group group) throws SQLException{
-        try(Connection conn = Database.connect()){
-            conn.setAutoCommit(false);
-            try{
-                try(PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO groups (id,name) VALUES (?,?)")) {
-                    ps.setObject(1, group.getGroupCode());
-                    ps.setObject(2, group.groupName);
-                    ps.executeUpdate();
-                }
-                try(PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO group_members (group_id, user_id) VALUES  (?,?)")) {
-                    for (UUID member : group.getMembers()) {
-                        ps.setObject(1, group.getGroupCode());
-                        ps.setObject(2, member);
-                        ps.addBatch();
-                    }
-                    ps.executeBatch();
-                }
-
-                conn.commit();
-            }catch (SQLException e){
-                conn.rollback();
-                throw e;
-            }
+    public static void save(Group group) {
+        String sql = "INSERT INTO groups (id, name) VALUES (?, ?)";
+        try (Connection conn = Database.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, group.getGroupCode());
+            ps.setString(2, group.groupName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+
 
     public static void addMember(UUID groupId, UUID userId, Roles role) throws SQLException{
         String sql = "INSERT INTO group_members ( group_id, user_id, role ) VALUES (?,?,?)";
@@ -48,6 +34,8 @@ public class GroupRepo {
             ps.executeUpdate();
         }
     }
+
+
     public static void removeMember(UUID groupId, UUID userId) throws SQLException{
         String sql = "DELETE FROM group_members WHERE group_id = ? AND user_id = ?";
         try (Connection conn = Database.connect();
@@ -55,6 +43,20 @@ public class GroupRepo {
             ps.setObject(1, groupId);
             ps.setObject(2, userId);
             ps.executeUpdate();
+        }
+    }
+    public static Group findById(UUID id) {
+        String sql = "SELECT id, name FROM groups WHERE id = ?";
+        try (Connection conn = Database.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return new Group(rs.getString("name"), id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -68,6 +70,9 @@ public class GroupRepo {
             ps.executeUpdate();
         }
     }
+    public static Group getGroup(){
+        return null;
+    };
 
 
 
