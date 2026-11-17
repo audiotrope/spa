@@ -8,6 +8,6 @@ import java.time.Instant;
  * @param refreshToken User refresh token
  * @param userId User id
  * @param userEmail User email
- * @param expiresAt How many seconds until the token expires
+ * @param expiresAt At what time point the token expires
  */
 public record Session(String accessToken, String refreshToken, String userId, String userEmail, Instant expiresAt) {}
