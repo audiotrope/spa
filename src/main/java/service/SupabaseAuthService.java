@@ -105,7 +105,7 @@ public class SupabaseAuthService implements AuthService{
      * Sends a JSON POST request to a Supabase Auth endpoint.
      * @param <E> the exception type created for a non-200 response
      * @param endpoint the URI to send the request to
-     * @param content the object to serialize as the JSON request body
+     * @param Content the object to serialize as the JSON request body
      * @param exceptionFactory a function that creates an exception from the HTTP status code
      * @return the response body when the status is HTTP 200
      * @throws IOException if sending the request or reading the response fails
