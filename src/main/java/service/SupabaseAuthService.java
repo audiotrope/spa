@@ -17,7 +17,10 @@ import java.time.Instant;
 // TODO: Handle token refresh
 // TODO: Handle sign out
 
-public class SupabaseAuthService {
+///  Make this service agnostic by implemnting an AuthInterface which the Supabase class can implement
+
+
+public class SupabaseAuthService implements AuthService{
     private final HttpClient client = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(10))
             .build();
@@ -37,15 +40,7 @@ public class SupabaseAuthService {
         publishableKey = requireEnv("SUPABASE_PUBLISHABLE_KEY");
     }
 
-    /**
-     * Sign in to the supabase backendd with email and password
-     * @param email the user's email
-     * @param password the user's password
-     * @return Returns a {@link(Session)} containing the access tokens
-     * @throws IOException Returned when the server data is incorrect
-     * @throws InterruptedException if the HTTP request is interupted
-     * @throws SignInException if Supabase rejects the sign in request
-     */
+    @Override
     public Session signIn(String email, String password)
         throws IOException, InterruptedException, SignInException {
         HttpRequest request = HttpRequest.newBuilder(signInUri)
@@ -106,27 +101,4 @@ public class SupabaseAuthService {
             User user) {}
 
     private record User(String id, String email) {}
-
-    /**
-     * User session
-     * @param accessToken User access token
-     * @param refreshToken User refresh token
-     * @param userId User id
-     * @param userEmail User email
-     * @param expiresAt When the access token expires
-     */
-    public record Session(String accessToken, String refreshToken, String userId, String userEmail, Instant expiresAt) {}
-
-    public static final class SignInException extends Exception {
-        private final int statusCode;
-
-        public SignInException(int statusCode) {
-            super("Supabase sign in failed with HTTP: " + statusCode);
-            this.statusCode = statusCode;
-        }
-
-        public int statusCode() {
-            return statusCode;
-        }
-    }
 }

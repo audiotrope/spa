@@ -1,3 +1,4 @@
+import service.SignInException;
 import service.SupaBaseStorageService;
 import service.SupabaseAuthService;
 
@@ -24,11 +25,20 @@ public class LoginTest {
                     .signIn(email.trim(), new String(password));
             System.out.println("Signed in as " + session.userId() + session.userEmail());
 
+            var storage = new SupaBaseStorageService();
+            if (Arrays.asList(args).contains("--list")) {
+                var files = storage.listFiles(session.accessToken(), session.userId());
+                System.out.println("Files found: " + files.size());
+                for (var storedFile : files) {
+                    System.out.println(storedFile.objectKey());
+                }
+                return;
+            }
+
             Path file = Path.of("/Users/travismohlin/output");
-            var response = new SupaBaseStorageService()
-                    .upload(file, session.accessToken(), session.userId());
+            var response = storage.upload(file, session.accessToken(), session.userId());
             System.out.println("Upload HTTP status: " + response.statusCode());
-        } catch (SupabaseAuthService.SignInException e) {
+        } catch (SignInException e) {
             System.out.println(e.getMessage());
         } finally {
             Arrays.fill(password, '\0');
