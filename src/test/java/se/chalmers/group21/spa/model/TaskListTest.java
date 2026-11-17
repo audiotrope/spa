@@ -1,14 +1,34 @@
 package se.chalmers.group21.spa.model;
 
 import org.junit.jupiter.api.Test;
+import se.chalmers.group21.spa.model.entities.TaskList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TaskListTest {
     @Test
-    void testCreateTaskList(){}
+    void testCreateTaskList(){
+        TaskList taskList = new TaskList("Test", 0);
+
+        assertNotNull(taskList);
+        assertEquals("Test", taskList.getTitle());
+    }
 
     @Test
-    void testRenameTaskList(){}
+    void testRenameTaskList(){
+        TaskList taskList = new TaskList("Test", 0);
+        taskList.rename("done");
+
+        assertEquals("done", taskList.getTitle());
+    }
 
     @Test
-    void testReoderTaskList(){}
+    void testReoderTaskList(){
+        TaskList taskList = new TaskList("Test", 0);
+        int newPosition = 2;
+        taskList.reorder(newPosition);
+
+        assertEquals(newPosition, taskList.getPosition());
+    }
 }

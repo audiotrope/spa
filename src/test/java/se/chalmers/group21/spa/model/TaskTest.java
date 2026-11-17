@@ -40,7 +40,12 @@ public class TaskTest {
 
     @Test
     void testCreateGroupTaskWithoutAssignments(){
+        UUID groupId = UUID.randomUUID();
+        Board board = new Board(groupId);
+        TaskList taskList = new TaskList("Doing", 0);
+        Task task = Task.createGroup("Test", "testning", LocalDate.parse("2026-11-30"),board.getId(), taskList.getId(), Set.of());
 
+        assertEquals(0, task.getAssignments().size());
     }
 
     @Test
