@@ -16,9 +16,9 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/*
-Created by: Thyra Öfverström
-    This class handles the tests of the logic for the class Task.
+/**
+ * This class handles the tests of the logic for the class Task.
+ * @author Thyra Öfverström
  */
 
 public class TaskTest {

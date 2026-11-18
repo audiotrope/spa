@@ -8,18 +8,18 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/*
-Created by: Thyra Öfverström
-    This class represents an individual task, it can be either personal och group-related.It stores information sush
-    as title, description, status, deadline and tasktype.
-    For personal tasks: it stores the unique ID of the user who owns the task.
-    For group tasks: it stores the board and list IDs and managers its assignments.
-    A Task handles changes to its own state, such as title, status, deadline and description. It also determines whether
-    a task is overdue or approaching its deadline (for dynamic change without users input).
-
-    Methods genereated by AI: assignUser(UUID userId),
-    createPersonal(String title, String description, LocalDate deadline, UUID ownerId),
-    createGroup(String title, String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds)
+/**
+ * This class represents an individual task, it can be either personal och group-related.It stores information sush
+ * as title, description, status, deadline and tasktype.
+ * For personal tasks: it stores the unique ID of the user who owns the task.
+ * For group tasks: it stores the board and list IDs and managers its assignments.
+ * A Task handles changes to its own state, such as title, status, deadline and description. It also determines whether
+ * a task is overdue or approaching its deadline (for dynamic change without users input).
+ *
+ * Methods genereated by AI: assignUser(UUID userId),
+ * createPersonal(String title, String description, LocalDate deadline, UUID ownerId),
+ *createGroup(String title, String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds)
+ * @author Thyra Öfverström
  */
 
 public class Task {

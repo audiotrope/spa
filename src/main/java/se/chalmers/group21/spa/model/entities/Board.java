@@ -3,13 +3,13 @@ package se.chalmers.group21.spa.model.entities;
 import java.util.ArrayList;
 import java.util.UUID;
 
-/*
-Created by: Thyra Öfverström
-    This class represents a board belonging to a specific group. It contains and managers the task lists beloning to the
-    board. It also handles operations such as addning, removning and reordering task lists. When moving tasks it
-    validates that tasks are moved to a valid list within the board.
-
-    Methods genereated by AI: reorderTaskList(UUID listId, int newPosition), moveTask(Task task, UUID targetListId)
+/**
+ * This class represents a board belonging to a specific group. It contains and managers the task lists beloning to the
+ * board. It also handles operations such as addning, removning and reordering task lists. When moving tasks it
+ * validates that tasks are moved to a valid list within the board.
+ *
+ * Methods genereated by AI: reorderTaskList(UUID listId, int newPosition), moveTask(Task task, UUID targetListId)
+ * @author Thyra Öfvertsröm
  */
 
 public class Board {

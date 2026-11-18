@@ -12,15 +12,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-/*
-Created by: Thyra Öfverström
-    This class handles the application's task related operations. It creates, updates and deletes both personal and
-    group tasks. It also manages task assignments and unassignments. It retrives tasks based on their list, owner or
-    assigned user. For the user's personal task overview it combines personal tasks and assigned group tasks when
-    retrieving the tasks. To store and retrieve tasks it uses the task repository.
+/**
+ * This class handles the application's task related operations. It creates, updates and deletes both personal and
+ * group tasks. It also manages task assignments and unassignments. It retrives tasks based on their list, owner or
+ * assigned user. For the user's personal task overview it combines personal tasks and assigned group tasks when
+ * retrieving the tasks. To store and retrieve tasks it uses the task repository.
+ *
+ * Methods genereated by AI: createGroupTask(String title,String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds),
+ * getTaskById(UUID taskId),
+ * @author Thyra Öfverström
 
-    Methods genereated by AI: createGroupTask(String title,String description, LocalDate deadline, UUID boardId, UUID listId, Set<UUID> assignedUserIds),
-    getTaskById(UUID taskId),
  */
 
 public class TaskManager {

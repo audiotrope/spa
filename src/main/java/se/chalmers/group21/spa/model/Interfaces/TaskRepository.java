@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/*
-Created by: Thyra Öfverström
-    This interface defines the operations used to store, retrive and delete tasks. It provides methods for finding
-    tasks by ID, list, owner or assigned user. It separates task management from the underlying data storage
-    implementation.
+/**
+ * This interface defines the operations used to store, retrive and delete tasks. It provides methods for finding
+ * tasks by ID, list, owner or assigned user. It separates task management from the underlying data storage
+ * implementation
+ * @author Thyra Öfverström
  */
 
 public interface TaskRepository {

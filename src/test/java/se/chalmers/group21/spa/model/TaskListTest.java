@@ -6,9 +6,9 @@ import se.chalmers.group21.spa.model.entities.TaskList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/*
-Created by: Thyra Öfverström
-    This class handles the tests of the logic for the class TaskList.
+/**
+ * This class handles the tests of the logic for the class TaskList.
+ * @author Thyra Öfverström
  */
 
 public class TaskListTest {

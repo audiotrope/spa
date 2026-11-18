@@ -11,9 +11,9 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
-/*
-Created by: Thyra Öfverström
-    This class handles the tests of the logic for the class Board.
+/**
+ * This class handles the tests of the logic for the class Board.
+ * @author Thyra Öfverström
  */
 
 public class BoardTest {

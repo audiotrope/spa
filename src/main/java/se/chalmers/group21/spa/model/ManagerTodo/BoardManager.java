@@ -9,16 +9,16 @@ import se.chalmers.group21.spa.model.entities.TaskList;
 import java.util.List;
 import java.util.UUID;
 
-/*
-Created by: Thyra Öfverström
-    This class handles board related operations. It creates and retrieves boards associated whit groups. It also
-    creates, deletes, renames and reoder task lists. It also handles moving tasks between lists on a board. Board and
-    task repositories are used to access presist data.
-
-    Methods genereated by AI: createBoard(UUID groupId), createTaskList(UUID boardId, String title),
-    deleteTaskList(UUID boardId, TaskList taskList), renameTaskList(UUID boardId, TaskList wantedTaskList, String title),
-    moveTask(UUID boardId, UUID taskId, UUID taskListId), getBoardById(UUID boardId),
-    getBoardByGroupId(UUID groupId)
+/**
+ * This class handles board related operations. It creates and retrieves boards associated whit groups. It also
+ * creates, deletes, renames and reoder task lists. It also handles moving tasks between lists on a board. Board and
+ * task repositories are used to access presist data.
+ *
+ * Methods genereated by AI: createBoard(UUID groupId), createTaskList(UUID boardId, String title),
+ * deleteTaskList(UUID boardId, TaskList taskList), renameTaskList(UUID boardId, TaskList wantedTaskList, String title),
+ * moveTask(UUID boardId, UUID taskId, UUID taskListId), getBoardById(UUID boardId),
+ * getBoardByGroupId(UUID groupId)
+ * @author Thyra Öfverström
  */
 
 public class BoardManager {
