@@ -1,5 +1,5 @@
 package se.chalmers.group21.spa.model.User;
-
+/*
 import se.chalmers.group21.spa.model.Database.GroupRepo;
 import se.chalmers.group21.spa.model.Database.UserRepo;
 import se.chalmers.group21.spa.model.Group.Group;
@@ -68,3 +68,4 @@ public class User {
 
     //TODO grades
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package se.chalmers.group21.spa.model.Group;
 
 import se.chalmers.group21.spa.model.User.User;
@@ -23,3 +24,4 @@ public class GroupManager {
 
 
 }
+*/

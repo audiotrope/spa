@@ -1,3 +1,4 @@
+/*
 package se.chalmers.group21.spa.model.Group;
 
 import se.chalmers.group21.spa.model.Database.GroupRepo;
@@ -21,7 +22,7 @@ public class Group{
         members.put(creator, Roles.ADMIN);
         this.groupId = UUID.randomUUID();
         this.groupName = name;
-        GroupRepo.save(this);
+        //GroupRepo.save(this);
         addMember(creator, Roles.ADMIN);
 
     }
@@ -37,7 +38,7 @@ public class Group{
     public void addMember(UUID newMember, Roles role){
         //members.put(newMember, Roles.MEMBER);
         try{
-            GroupRepo.addMember(groupId, newMember, role);
+            //GroupRepo.addMember(groupId, newMember, role);
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +102,7 @@ public class Group{
 
 
  */
-    }
+   // }
 
 
 
