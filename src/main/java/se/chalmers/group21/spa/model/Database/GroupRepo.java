@@ -45,7 +45,7 @@ public class GroupRepo {
             ps.executeUpdate();
         }
     }
-    public static Group findById(UUID id) {
+    public static Group findByGroupId(UUID id) {
         String sql = "SELECT id, name FROM groups WHERE id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -70,9 +70,6 @@ public class GroupRepo {
             ps.executeUpdate();
         }
     }
-    public static Group getGroup(){
-        return null;
-    };
 
 
 

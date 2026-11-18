@@ -47,7 +47,7 @@ public class User {
 
     public void joinGroup(String str){
         UUID groupId = UUID.fromString(str);
-        Group group = GroupRepo.findById(groupId);
+        Group group = GroupRepo.findByGroupId(groupId);
         group.addMember(userId);
     }
 
