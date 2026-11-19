@@ -1,7 +1,9 @@
+
 package se.chalmers.group21.spa.model.Database;
 import se.chalmers.group21.spa.model.Group.Roles;
 import se.chalmers.group21.spa.model.Group2.Group2;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
+import se.chalmers.group21.spa.model.User2.User1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,18 +31,18 @@ public class GroupRepo implements GroupRepository {
     }
 
     @Override
-    public void addMember(UUID groupId, UUID userId) throws SQLException {
+    public void addMember(UUID groupId, User1 userId) throws SQLException {
         String sql = "INSERT INTO group_members ( group_id, user_id, role ) VALUES (?,?,?)";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, groupId);
             ps.setObject(2, userId);
-            ps.setObject(3, "MEMBER");
+            ps.setObject(3, Roles.MEMBER);
             ps.executeUpdate();
         }
     }
     @Override
-    public void removeMember(UUID groupId, UUID userId) throws SQLException{
+    public void removeMember(UUID groupId, User1 userId) throws SQLException{
         String sql = "DELETE FROM group_members WHERE group_id = ? AND user_id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
@@ -60,14 +62,14 @@ public class GroupRepo implements GroupRepository {
             if (!rs.next()) {
                 return null;
             }
-            return new Group2(rs.getString("name"), id);
+            return new Group2(rs.getString("name"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void changeRole(UUID groupId, UUID userThatChanges, UUID userToChange, Roles role)throws SQLException {
+    public void changeRole(UUID groupId, User1 userThatChanges, User1 userToChange, Roles role)throws SQLException {
         String sql = "UPDATE group_members SET role = ? WHERE group_id = ? AND user_id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
