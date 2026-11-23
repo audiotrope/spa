@@ -1,9 +1,9 @@
 
 package se.chalmers.group21.spa.model.Database;
 import se.chalmers.group21.spa.model.Group.Roles;
-import se.chalmers.group21.spa.model.Group2.Group2;
+import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
-import se.chalmers.group21.spa.model.User2.User1;
+import se.chalmers.group21.spa.model.User.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class GroupRepo implements GroupRepository {
 
 
     @Override
-    public void save(Group2 group) {
+    public void save(Group group) {
         String sql = "INSERT INTO groups (id, name) VALUES (?, ?)";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class GroupRepo implements GroupRepository {
     }
 
     @Override
-    public void addMember(UUID groupId, User1 userId) throws SQLException {
+    public void addMember(UUID groupId, User userId) throws SQLException {
         String sql = "INSERT INTO group_members ( group_id, user_id, role ) VALUES (?,?,?)";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
@@ -42,7 +42,7 @@ public class GroupRepo implements GroupRepository {
         }
     }
     @Override
-    public void removeMember(UUID groupId, User1 userId) throws SQLException{
+    public void removeMember(UUID groupId, User userId) throws SQLException{
         String sql = "DELETE FROM group_members WHERE group_id = ? AND user_id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
@@ -53,7 +53,7 @@ public class GroupRepo implements GroupRepository {
     }
 
     @Override
-    public Group2 findGroupById(UUID id) {
+    public Group findGroupById(UUID id) {
         String sql = "SELECT id, name FROM groups WHERE id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -62,14 +62,14 @@ public class GroupRepo implements GroupRepository {
             if (!rs.next()) {
                 return null;
             }
-            return new Group2(rs.getString("name"));
+            return new Group(rs.getString("name"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void changeRole(UUID groupId, User1 userThatChanges, User1 userToChange, Roles role)throws SQLException {
+    public void changeRole(UUID groupId, User userThatChanges, User userToChange, Roles role)throws SQLException {
         String sql = "UPDATE group_members SET role = ? WHERE group_id = ? AND user_id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
