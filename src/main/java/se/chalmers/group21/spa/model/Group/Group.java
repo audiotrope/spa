@@ -27,7 +27,10 @@ public class Group {
     }
 
     public void addMember(User newMember){
-        members.put(newMember, Roles.MEMBER);
+        if (!members.containsKey(newMember)) {
+            members.put(newMember, Roles.MEMBER);
+        }
+
     }
 
     public void removeMember(User memberToRemove){
