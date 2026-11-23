@@ -9,20 +9,20 @@ import se.chalmers.group21.spa.model.User.User;
 import java.util.*;
 
 public class InMemoryGroupRepo implements GroupRepository{
-    public HashSet<Group> groups;
+    public HashMap<Group, User> groups;
 
     public InMemoryGroupRepo (UserRepository userRepo){
-        this.groups = new HashSet<>();
+        this.groups = new HashMap<>();
 
 
     }
 
     @Override
-    public void save(Group group) {
+    public void save(Group group, User creator) {
         if (findGroupById(group.getGroupCode()) != null){
             throw new IllegalArgumentException("group already exists" + group.groupName);
         }
-        groups.add(group);
+        groups.put(group, creator);
     }
 
 
@@ -40,7 +40,7 @@ public class InMemoryGroupRepo implements GroupRepository{
 
     @Override
     public Group findGroupById(UUID id) {
-        for (Group g : groups) {
+        for (Group g : groups.keySet()) {
             if (g.getGroupCode() == id)
                 return g;
         }

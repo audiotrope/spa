@@ -16,7 +16,7 @@ public class NewGroupManager {
 
     public Group createGroup(String name, User creator ){
         Group group = new Group(name, creator);
-        repo.save(group);
+        repo.save(group, creator);
         return group;
     }
 

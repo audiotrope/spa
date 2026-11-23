@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public interface GroupRepository {
-     void save(Group group);
-     void addMember(UUID groupId, User userId) throws SQLException;
+     void save(Group group, User creator);
+     void addMember(UUID groupId, User user) throws SQLException;
      void removeMember(UUID groupId, User UserToRemove)throws SQLException;
      Group findGroupById(UUID id);
      void changeRole(UUID groupId, User userThatChanges, User UserToChange, Roles role) throws SQLException;

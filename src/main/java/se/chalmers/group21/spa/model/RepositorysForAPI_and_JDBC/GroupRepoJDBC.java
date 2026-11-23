@@ -1,5 +1,6 @@
-
-package se.chalmers.group21.spa.model.Database;
+/*
+package se.chalmers.group21.spa.model.RepositorysForAPI_and_JDBC;
+import se.chalmers.group21.spa.model.Database.Database;
 import se.chalmers.group21.spa.model.Group.Roles;
 import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 
 
-public class GroupRepo implements GroupRepository {
+public class GroupRepoJDBC implements GroupRepository {
 
     @Override
     public void save(Group group) {
@@ -29,23 +30,23 @@ public class GroupRepo implements GroupRepository {
     }
 
     @Override
-    public void addMember(UUID groupId, User userId) throws SQLException {
+    public void addMember(UUID groupId, User user) throws SQLException {
         String sql = "INSERT INTO group_members ( group_id, user_id, role ) VALUES (?,?,?)";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, groupId);
-            ps.setObject(2, userId);
+            ps.setObject(2, user.getUserId());
             ps.setObject(3, Roles.MEMBER);
             ps.executeUpdate();
         }
     }
     @Override
-    public void removeMember(UUID groupId, User userId) throws SQLException{
+    public void removeMember(UUID groupId, User user) throws SQLException{
         String sql = "DELETE FROM group_members WHERE group_id = ? AND user_id = ?";
         try (Connection conn = Database.connect();
              PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, groupId);
-            ps.setObject(2, userId);
+            ps.setObject(2, user.getUserId());
             ps.executeUpdate();
         }
     }
@@ -73,10 +74,13 @@ public class GroupRepo implements GroupRepository {
              PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, role.name());
             ps.setObject(2, groupId);
-            ps.setObject(3, userToChange);
+            ps.setObject(3, userToChange.getUserId());
             ps.executeUpdate();
         }
     }
 
 
 }
+
+
+ */
