@@ -22,8 +22,8 @@ public class Main {
 
       User found = userRepo.findByUsername("testanna");
       System.out.println(found.getUserId());
-      Group group = new Group("testGrupp", found);
-      groupRepo.save(group, found);
+      //Group group = new Group("testGrupp", found); //funkar ej
+      //groupRepo.save(group, found);
 
 
 
