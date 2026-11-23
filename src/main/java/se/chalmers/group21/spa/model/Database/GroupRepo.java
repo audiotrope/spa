@@ -15,8 +15,6 @@ import java.util.UUID;
 
 public class GroupRepo implements GroupRepository {
 
-
-
     @Override
     public void save(Group group) {
         String sql = "INSERT INTO groups (id, name) VALUES (?, ?)";
