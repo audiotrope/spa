@@ -1,0 +1,28 @@
+package se.chalmers.group21.spa.model.InMemory;
+
+import se.chalmers.group21.spa.model.Interfaces.UserRepository;
+import se.chalmers.group21.spa.model.User.User;
+
+import java.util.*;
+
+public class InMemoryUserRepository implements UserRepository {
+    private final Map<UUID, User> users = new HashMap<>();
+
+    @Override
+    public void saveUser(User user) {
+        if (findByUsername(user.username) != null) {
+            throw new IllegalStateException("duplicate key: " + user.username);
+        }
+        users.put(user.getUserId(), user);
+    }
+
+    @Override
+    public User findUserById(UUID id) { return users.get(id); }
+
+    @Override
+    public User findByUsername(String username) {
+        return users.values().stream()
+                .filter(u -> u.username.equals(username))
+                .findFirst().orElse(null);
+    }
+}
