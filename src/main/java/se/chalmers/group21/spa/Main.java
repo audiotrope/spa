@@ -1,18 +1,31 @@
 package se.chalmers.group21.spa;
 
-import java.io.IOException;
 
-import se.chalmers.group21.spa.controller.Controller;
-import se.chalmers.group21.spa.model.Model;
-import se.chalmers.group21.spa.view.View;
+import se.chalmers.group21.spa.model.Database.SupabaseClient;
+import se.chalmers.group21.spa.model.Group.Group;
+import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
+import se.chalmers.group21.spa.model.Interfaces.UserRepository;
+import se.chalmers.group21.spa.model.RepositorysForAPI_and_JDBC.GroupRepoAPI;
+import se.chalmers.group21.spa.model.RepositorysForAPI_and_JDBC.UserRepoAPI;
+import se.chalmers.group21.spa.model.User.User;
+
+import java.util.UUID;
+
+
 
 public class Main {
-  public static void main(String[] args) throws IOException {
-    Model model = new Model();
-    View view = new View(model);
-    Controller controller = new Controller(model);
-    
-    System.out.println("Hello World! Press any key to exit.");
-    System.in.read(); // Wait for input
+  public static void main(String[] args)  {
+
+      SupabaseClient supabase = new SupabaseClient();
+      UserRepository userRepo = new UserRepoAPI(supabase);
+      GroupRepository groupRepo = new GroupRepoAPI(supabase);
+
+      User found = userRepo.findByUsername("testanna");
+      System.out.println(found.getUserId());
+      //Group group = new Group("testGrupp", found); //funkar ej
+      //groupRepo.save(group, found);
+
+
+
   }
 }

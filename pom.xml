@@ -14,6 +14,7 @@
   </properties>
   <dependencyManagement>
     <dependencies>
+
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
@@ -21,15 +22,49 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
     </dependencies>
   </dependencyManagement>
   <dependencies>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.7.14</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>21.0.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.15.0</version>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.15.0</version>
+    </dependency>
+
+
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>21.0.8</version>
+    </dependency>
+
   </dependencies>
+
+
   <build>
     <plugins>
       <plugin>
@@ -37,6 +72,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.6</version>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -57,6 +93,16 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>se.chalmers.group21.spa.Main</mainClass>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -72,6 +118,7 @@
           <mainClass>${main.class}</mainClass>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 </project>
