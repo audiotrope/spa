@@ -12,10 +12,11 @@ import se.chalmers.group21.spa.model.User.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-//AI generated, I created the groupRepo for JDBC but we decided to use API and i didnt know how to translate it.
+//AI generated, I created the groupRepo for JDBC, but we decided to use API and I didn't know how to translate it.
 
 public class GroupRepoAPI implements GroupRepository {
     private final SupabaseClient supabase;
@@ -25,25 +26,36 @@ public class GroupRepoAPI implements GroupRepository {
         this.supabase = supabase;
     }
 
+    //Sparar gruppen till supabase
     @Override
-    public void save(Group group, User creator) {
+    public void save(Group group) {
         String json = gson.toJson(Map.of(
                 "id", group.getGroupCode().toString(),
-                "name", group.groupName,
-                "created_by", creator.getUserId()));
+                "name", group.groupName
+                ));
         try {
             supabase.post("groups", json);
-        } catch (IOException | InterruptedException e) {
+            for (Map.Entry<User, Roles> entry : group.members.entrySet()) {
+                addMember(group.getGroupCode(), entry.getKey(), entry.getValue());
+            }
+
+        } catch (IOException | InterruptedException  | SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void addMember(UUID groupId, User user) throws SQLException {
+        addMember(groupId, user, Roles.MEMBER);
+    }
+
+
+    //Sparar gruppmedlemmar till supbase, group_members
+    public void addMember(UUID groupId, User user, Roles role) throws SQLException {
         String json = gson.toJson(Map.of(
                 "group_id", groupId.toString(),
-                "user_id", user.getUserId().toString(),      // se anmärkning nedan
-                "role", Roles.MEMBER.name()));
+                "user_id", user.getUserId().toString(),
+                "username", user.username,
+                "role", role.name().toLowerCase()));
         try {
             supabase.post("group_members", json);
         } catch (IOException | InterruptedException e) {
@@ -62,6 +74,7 @@ public class GroupRepoAPI implements GroupRepository {
     }
 
     @Override
+    //Skapar ny grupp i minnet med information från databasen
     public Group findGroupById(UUID id) {
         try {
             String body = supabase.get("groups?id=eq." + id + "&select=id,name");

@@ -20,8 +20,9 @@ public class Main {
       UserRepository userRepo = new UserRepoAPI(supabase);
       GroupRepository groupRepo = new GroupRepoAPI(supabase);
 
-      User found = userRepo.findByUsername("testanna");
-      System.out.println(found.getUserId());
+      User found = userRepo.findByUsername("Anna");
+      groupRepo.save(new Group("Testgrupp", found));
+      //System.out.println(found.getUserId());
       //Group group = new Group("testGrupp", found); //funkar ej
       //groupRepo.save(group, found);
 

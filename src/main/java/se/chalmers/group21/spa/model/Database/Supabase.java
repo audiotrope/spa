@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class Supabase implements GroupRepository, UserRepository {
     @Override
-    public void save(Group group, User creator) {
+    public void save(Group group) {
 
     }
 

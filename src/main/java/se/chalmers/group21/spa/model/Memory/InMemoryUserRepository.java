@@ -1,4 +1,4 @@
-package se.chalmers.group21.spa.model.InMemory;
+package se.chalmers.group21.spa.model.Memory;
 
 import se.chalmers.group21.spa.model.Interfaces.UserRepository;
 import se.chalmers.group21.spa.model.User.User;

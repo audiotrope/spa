@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public interface GroupRepository {
-     void save(Group group, User creator);
+     void save(Group group);
      void addMember(UUID groupId, User user) throws SQLException;
      void removeMember(UUID groupId, User UserToRemove)throws SQLException;
      Group findGroupById(UUID id);
