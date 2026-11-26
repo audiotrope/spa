@@ -59,7 +59,7 @@
 
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>26</version>
+      <version>21.0.8</version>
     </dependency>
 
   </dependencies>
@@ -67,16 +67,6 @@
 
   <build>
     <plugins>
-
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-          <mainClass>se.chalmers.group21.spa</mainClass>
-        </configuration>
-      </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -104,7 +94,14 @@
         </executions>
       </plugin>
 
-
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>se.chalmers.group21.spa.TaskCardPreviewApp</mainClass>
+        </configuration>
+      </plugin>
 
 
 
