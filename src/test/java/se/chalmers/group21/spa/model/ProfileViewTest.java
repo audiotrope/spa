@@ -24,7 +24,10 @@ public class ProfileViewTest {
             User testUser = new User("Anna");
             User testUser2 = new User("Bosse");
             Group testGroup = new Group("Bassarna", testUser);
+            Group testGroup2 = new Group("Pansar", testUser2);
+            testGroup2.addMember(testUser);
             testGroup.addMember(testUser2);
+            System.out.println(testUser.groups);
 
 
             // Skapa controllern

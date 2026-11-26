@@ -14,6 +14,7 @@ public class ProfileView {
     private VBox root;
     private Button profileButton;
     private UserDetailsView userDetails;
+    private GroupsView groupsView;
 
     public ProfileView() {
         createView();
@@ -22,6 +23,7 @@ public class ProfileView {
 
     private void createView() {
         userDetails = new UserDetailsView();
+        groupsView = new GroupsView();
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
@@ -53,8 +55,8 @@ public class ProfileView {
 
         //userDetails = createBox("red");
 
-        VBox options = new VBox();
-            options.getStyleClass().add("sub-category2");
+        //VBox options = new VBox();
+        //    options.getStyleClass().add("sub-category2");
 
 
         VBox navigation = new VBox();
@@ -64,7 +66,7 @@ public class ProfileView {
             aboutBox.getStyleClass().add("sub-category1");
 
         grid.add(userDetails, 0, 0, 1, 2);
-        grid.add(options, 1, 0, 2, 1);
+        grid.add(groupsView, 1, 0, 2, 1);
         grid.add(aboutBox, 1, 1);
         grid.add(navigation, 2, 1);
 
@@ -105,6 +107,9 @@ public class ProfileView {
         return userDetails;
     }
 
+    public GroupsView getGroupsView(){
+        return groupsView;
+    }
     public String getStylesheet() {
         return getClass()
                 .getResource("/css/theme.css")

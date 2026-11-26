@@ -16,6 +16,7 @@ public class Group {
         members.put(creator, Roles.ADMIN);
         this.groupId = UUID.randomUUID();
         this.groupName = name;
+        creator.groups.add(this);
     }
     public Group(String name){
         this.members = new HashMap<>();
@@ -30,6 +31,7 @@ public class Group {
     public void addMember(User newMember){
         if (!members.containsKey(newMember)) {
             members.put(newMember, Roles.MEMBER);
+            newMember.groups.add(this);
         }
 
     }
