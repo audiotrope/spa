@@ -1,6 +1,7 @@
 package se.chalmers.group21.spa.view;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -12,16 +13,21 @@ public class ProfileView {
 
     private VBox root;
     private Button profileButton;
+    private UserDetailsView userDetails;
 
     public ProfileView() {
         createView();
+
     }
 
     private void createView() {
+        userDetails = new UserDetailsView();
         GridPane grid = new GridPane();
         grid.setHgap(15);
+        grid.setVgap(15);
         grid.setPadding(new Insets(10));
         root = new VBox(20);
+
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(58);
@@ -45,12 +51,19 @@ public class ProfileView {
 
 
 
-        VBox profileView = createBox("red");
-        VBox options = createBox("blue");
-        VBox navigation = createBox("blue");
-        VBox aboutBox = createBox("black");
+        //userDetails = createBox("red");
 
-        grid.add(profileView, 0, 0, 1, 2);
+        VBox options = new VBox();
+            options.getStyleClass().add("sub-category2");
+
+
+        VBox navigation = new VBox();
+            navigation.getStyleClass().add("sub-category1");
+
+        VBox aboutBox = new VBox();
+            aboutBox.getStyleClass().add("sub-category1");
+
+        grid.add(userDetails, 0, 0, 1, 2);
         grid.add(options, 1, 0, 2, 1);
         grid.add(aboutBox, 1, 1);
         grid.add(navigation, 2, 1);
@@ -80,5 +93,21 @@ public class ProfileView {
         );
 
         return box;
+    }
+
+    public void setUserDetailsView(VBox view){
+        userDetails.getChildren().add(view);
+        view.setVisible(true);
+        view.setManaged(true);
+        view.setMinSize(300, 200);
+    }
+    public UserDetailsView getUserDetailsView() {
+        return userDetails;
+    }
+
+    public String getStylesheet() {
+        return getClass()
+                .getResource("/css/theme.css")
+                .toExternalForm();
     }
 }

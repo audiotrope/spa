@@ -2,7 +2,7 @@ package se.chalmers.group21.spa.model.Group;
 
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.User.User;
-
+import se.chalmers.group21.spa.model.enums.Roles;
 
 import java.sql.SQLException;
 import java.util.UUID;

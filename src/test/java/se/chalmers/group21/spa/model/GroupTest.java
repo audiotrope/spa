@@ -3,7 +3,7 @@ package se.chalmers.group21.spa.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.chalmers.group21.spa.model.Group.Group;
-import se.chalmers.group21.spa.model.Group.Roles;
+import se.chalmers.group21.spa.model.enums.Roles;
 import se.chalmers.group21.spa.model.User.User;
 
 import static org.junit.jupiter.api.Assertions.*;

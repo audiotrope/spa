@@ -1,6 +1,7 @@
 package se.chalmers.group21.spa.model.Group;
 
 import se.chalmers.group21.spa.model.User.User;
+import se.chalmers.group21.spa.model.enums.Roles;
 
 import java.util.HashMap;
 import java.util.UUID;

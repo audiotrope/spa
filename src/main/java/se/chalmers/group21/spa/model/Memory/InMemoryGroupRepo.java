@@ -1,6 +1,6 @@
 package se.chalmers.group21.spa.model.Memory;
 
-import se.chalmers.group21.spa.model.Group.Roles;
+import se.chalmers.group21.spa.model.enums.Roles;
 import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.Interfaces.UserRepository;

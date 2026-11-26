@@ -1,7 +1,7 @@
 package se.chalmers.group21.spa.model.Interfaces;
 
 import se.chalmers.group21.spa.model.Group.Group;
-import se.chalmers.group21.spa.model.Group.Roles;
+import se.chalmers.group21.spa.model.enums.Roles;
 import se.chalmers.group21.spa.model.User.User;
 
 import java.sql.SQLException;

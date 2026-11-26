@@ -6,13 +6,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import se.chalmers.group21.spa.model.Database.SupabaseClient;
 import se.chalmers.group21.spa.model.Group.Group;
-import se.chalmers.group21.spa.model.Group.Roles;
+import se.chalmers.group21.spa.model.enums.Roles;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.User.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
