@@ -100,12 +100,12 @@ public class Task {
     //AI
     public void assignUser(UUID userId){
        if (type != TaskType.GROUP){
-            throw new IllegalStateException(
+            throw new IllegalArgumentException(
                     "Only group tasks can have assignments"
             );
        }
        if (userId == null){
-           throw new IllegalStateException(
+           throw new IllegalArgumentException(
                    "User ID can not be null"
            );
        }

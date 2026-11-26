@@ -1,0 +1,46 @@
+.board-background {
+    -fx-background-color: #F1EEF9;
+}
+
+.task-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(60, 40, 110, 0.10), 8, 0, 0, 2);
+}
+
+.task-card-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2A2347;
+}
+
+.task-card-description {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B6585;
+}
+
+.task-card-assignees {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6B6585;
+}
+
+.deadline-badge {
+    -fx-font-size: 11px;
+    -fx-padding: 3 10 3 10;
+    -fx-background-radius: 20;
+}
+
+.deadline-normal {
+    -fx-background-color: #E8E0F7;
+    -fx-text-fill: #6B46A8;
+}
+
+.deadline-soon {
+    -fx-background-color: #FBE9D0;
+    -fx-text-fill: #9A5B13;
+}
+
+.deadline-overdue {
+    -fx-background-color: #F9D9D9;
+    -fx-text-fill: #A12C2C;
+}

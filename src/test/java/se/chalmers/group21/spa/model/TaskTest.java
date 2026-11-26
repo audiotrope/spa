@@ -158,7 +158,7 @@ public class TaskTest {
         UUID user2 = UUID.randomUUID();
         Task task = Task.createPersonal("Test", "testning", LocalDate.parse("2026-11-30"),user1);
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> task.assignUser(user2));
         assertEquals(0, task.getAssignments().size());
     }
