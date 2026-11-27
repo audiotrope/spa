@@ -30,7 +30,11 @@ public class TaskCardView extends VBox {
         setPadding(new Insets(14, 16, 14, 16));
         setCursor(Cursor.HAND);
         setOnMouseClicked(event -> onClicked.accept(taskId));
+        update(viewModel);
+    }
 
+    public void update(TaskCardViewModel viewModel) {
+        getChildren().clear();
         getChildren().add(createTitle(viewModel));
         if (hasText(viewModel.description())) {
             getChildren().add(createDescription(viewModel));

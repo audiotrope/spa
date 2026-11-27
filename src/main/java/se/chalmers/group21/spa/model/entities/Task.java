@@ -52,9 +52,11 @@ public class Task {
     }
 
     public void changeTitle(String title){
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Title cannot be empty");
+        }
         this.title = title;
     }
-
     public void changeStatus(Status status){
         this.status = status;
     }

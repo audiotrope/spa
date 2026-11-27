@@ -44,3 +44,67 @@
     -fx-background-color: #F9D9D9;
     -fx-text-fill: #A12C2C;
 }
+
+.overlay-backdrop {
+    -fx-background-color: rgba(42, 35, 71, 0.45);
+}
+
+.detail-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(42, 35, 71, 0.30), 24, 0, 0, 6);
+}
+
+.detail-heading {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2A2347;
+}
+
+.field-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B6585;
+}
+
+.detail-panel .text-field {
+    -fx-background-color: #F6F3FC;
+    -fx-background-radius: 8;
+    -fx-border-color: #E8E0F7;
+    -fx-border-radius: 8;
+    -fx-padding: 8 10 8 10;
+}
+
+.detail-panel .text-field:focused {
+    -fx-border-color: #6B46A8;
+}
+
+.detail-panel .text-area {
+    -fx-background-color: transparent;
+}
+
+.detail-panel .text-area .content {
+    -fx-background-color: #F6F3FC;
+    -fx-background-radius: 8;
+}
+
+.error-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #A12C2C;
+}
+
+.button-primary {
+    -fx-background-color: #6B46A8;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 20 8 20;
+    -fx-cursor: hand;
+}
+
+.button-secondary {
+    -fx-background-color: #EFEAF9;
+    -fx-text-fill: #6B46A8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 20 8 20;
+    -fx-cursor: hand;
+}
