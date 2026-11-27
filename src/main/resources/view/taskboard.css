@@ -108,3 +108,52 @@
     -fx-padding: 8 20 8 20;
     -fx-cursor: hand;
 }
+
+.list-column {
+    -fx-background-radius: 20;
+    -fx-padding: 22;
+}
+
+.list-color-0 { -fx-background-color: #E8E0F7; }
+.list-color-1 { -fx-background-color: #F5E7DA; }
+.list-color-2 { -fx-background-color: #E2F0E7; }
+.list-color-3 { -fx-background-color: #E7ECF7; }
+
+.list-title {
+    -fx-font-family: "Georgia";
+    -fx-font-size: 22px;
+    -fx-text-fill: #2A2347;
+}
+
+.list-badge {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 12px;
+    -fx-text-fill: #2A2347;
+}
+
+.add-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-text-fill: #6B46A8;
+    -fx-font-size: 18px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 16 10 16;
+    -fx-cursor: hand;
+}
+
+.list-empty {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B6585;
+}
+
+.list-scroll,
+.list-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.list-scroll {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}

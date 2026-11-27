@@ -99,7 +99,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.8</version>
         <configuration>
-          <mainClass>se.chalmers.group21.spa.TaskCardPreviewApp</mainClass>
+          <mainClass>se.chalmers.group21.spa.TaskListPreviewApp</mainClass>
         </configuration>
       </plugin>
 

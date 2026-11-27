@@ -1,4 +1,4 @@
-package se.chalmers.group21.spa.controller;
+package se.chalmers.group21.spa.controller.ToDoController;
 
 import javafx.scene.layout.StackPane;
 import se.chalmers.group21.spa.model.Group.Group;

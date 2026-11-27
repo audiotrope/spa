@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import se.chalmers.group21.spa.controller.TaskCardController;
+import se.chalmers.group21.spa.controller.ToDoController.TaskCardController;
 import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Interfaces.BoardRepository;
 import se.chalmers.group21.spa.model.Interfaces.TaskRepository;
