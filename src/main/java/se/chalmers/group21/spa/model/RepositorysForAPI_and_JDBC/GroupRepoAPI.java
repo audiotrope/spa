@@ -6,15 +6,16 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import se.chalmers.group21.spa.model.Database.SupabaseClient;
 import se.chalmers.group21.spa.model.Group.Group;
-import se.chalmers.group21.spa.model.Group.Roles;
+import se.chalmers.group21.spa.model.enums.Roles;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.User.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 
 //AI generated, I created the groupRepo for JDBC, but we decided to use API and I didn't know how to translate it.
 
@@ -54,7 +55,7 @@ public class GroupRepoAPI implements GroupRepository {
         String json = gson.toJson(Map.of(
                 "group_id", groupId.toString(),
                 "user_id", user.getUserId().toString(),
-                "username", user.username,
+                "username", user.getUsername(),
                 "role", role.name().toLowerCase()));
         try {
             supabase.post("group_members", json);
@@ -99,5 +100,53 @@ public class GroupRepoAPI implements GroupRepository {
         } catch (IOException | InterruptedException e) {
             throw new SQLException(e);
         }
+    }
+
+    public HashMap<UUID, String> findGroupsIdByUser(User user) {
+        try {
+            String body = supabase.get(
+                    "group_members?user_id=eq." + user.getUserId() + "&select=group_id,role"
+            );
+
+            JsonArray rows = JsonParser.parseString(body).getAsJsonArray();
+
+            HashMap<UUID, String> groupIdsAndRole = new HashMap<>();
+
+            for (JsonElement element : rows) {
+                JsonObject row = element.getAsJsonObject();
+
+                UUID groupId = UUID.fromString(
+                        row.get("group_id").getAsString()
+                );
+                String role = row.get("role").getAsString();
+
+                groupIdsAndRole.put(groupId, role);
+            }
+
+            return groupIdsAndRole;
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
+    public HashMap<Group, String> findGroupsByUser(User user) {
+        HashMap<UUID, String> groupIds = findGroupsIdByUser(user);
+
+        HashMap<Group,String> groupsAndRole = new HashMap<>();
+
+        for (UUID groupId : groupIds.keySet()) {
+            Group group = findGroupById(groupId);
+
+
+            if (group != null) {
+                String role = group.members.get(user).toString();
+                groupsAndRole.put(group,role);
+            }
+        }
+
+        return groupsAndRole;
     }
 }

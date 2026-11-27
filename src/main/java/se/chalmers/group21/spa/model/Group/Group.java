@@ -1,6 +1,7 @@
 package se.chalmers.group21.spa.model.Group;
 
 import se.chalmers.group21.spa.model.User.User;
+import se.chalmers.group21.spa.model.enums.Roles;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -13,8 +14,11 @@ public class Group {
     public Group(String name, User creator){
         this.members = new HashMap<>();
         members.put(creator, Roles.ADMIN);
+
         this.groupId = UUID.randomUUID();
         this.groupName = name;
+
+        creator.addGroupToUser(this);
     }
     public Group(String name){
         this.members = new HashMap<>();
@@ -29,6 +33,7 @@ public class Group {
     public void addMember(User newMember){
         if (!members.containsKey(newMember)) {
             members.put(newMember, Roles.MEMBER);
+            newMember.addGroupToUser(this);
         }
 
     }

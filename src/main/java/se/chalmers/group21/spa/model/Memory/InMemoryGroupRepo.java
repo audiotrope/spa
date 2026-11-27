@@ -1,6 +1,6 @@
 package se.chalmers.group21.spa.model.Memory;
 
-import se.chalmers.group21.spa.model.Group.Roles;
+import se.chalmers.group21.spa.model.enums.Roles;
 import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.Interfaces.UserRepository;
@@ -51,5 +51,14 @@ public class InMemoryGroupRepo implements GroupRepository{
     public void changeRole(UUID groupId, User userThatChanges, User userToChange, Roles role) {
         Group group = findGroupById(groupId);
         group.changeRole(userThatChanges, userToChange, role);
+    }
+
+    @Override
+    public HashMap<Group,String> findGroupsByUser(User user) {
+        HashMap<Group, String> GroupAndRole = new HashMap<>();
+        for(Group group : user.getUsersGroups()){
+            GroupAndRole.put(group, group.getMembers().get(user).toString());
+        }
+        return GroupAndRole;
     }
 }

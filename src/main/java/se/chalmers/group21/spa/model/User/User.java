@@ -2,16 +2,19 @@ package se.chalmers.group21.spa.model.User;
 
 
 import se.chalmers.group21.spa.model.Group.Group;
+import se.chalmers.group21.spa.model.entities.TaskAssignment;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 
 public class User {
-    public final String username;
+    private final String username;
     private final UUID userId;
-    private ArrayList<String> courses;
-    public ArrayList<Group> groups;
+    private final ArrayList<String> courses;
+    private final ArrayList<Group> groups;
 
     //TODO
     //Todos todos;
@@ -20,13 +23,13 @@ public class User {
     public User(UUID id, String username){
         this.userId = id;
         this.username = username;
+        this.courses = new ArrayList<>();
+        this.groups = new ArrayList<>();
+
     }
 
     public User(String username){
-        this.userId = UUID.randomUUID();
-        this.username = username;
-        this.courses = new ArrayList<>();
-        this.groups = new ArrayList<>();
+        this(UUID.randomUUID(), username);
     }
 
     public void leaveGroup(Group group){
@@ -41,6 +44,35 @@ public class User {
         Group group = new Group(groupname, this);
         groups.add(group);
 
+    }
+    public String getUsername(){
+        return username;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof User)) {
+            return false;
+        }
+
+        User other = (User) obj;
+        return Objects.equals(userId, other.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+
+    public void addGroupToUser(Group group){
+        groups.add(group);
+    }
+    public List<Group> getUsersGroups(){
+        return groups;
     }
 
     public void removeCourse (String course){

@@ -13,8 +13,8 @@ public class SupabaseClient {
     private final HttpClient client = HttpClient.newHttpClient();
 
     public SupabaseClient() {
-        String url = System.getenv("SUPABASE_URL");
-        String key = System.getenv("SUPABASE_PUBLISHABLE_KEY");
+        String url = SupabaseConfig.getUrl();
+        String key = SupabaseConfig.getKey();
         if (url == null || key == null) {
             throw new IllegalStateException(
                     "SUPABASE_URL och SUPABASE_PUBLISHABLE_KEY måste vara satta");
