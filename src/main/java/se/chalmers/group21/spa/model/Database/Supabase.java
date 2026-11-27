@@ -6,6 +6,8 @@ import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.Interfaces.UserRepository;
 import se.chalmers.group21.spa.model.User.User;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class Supabase implements GroupRepository, UserRepository {
@@ -32,6 +34,11 @@ public class Supabase implements GroupRepository, UserRepository {
     @Override
     public void changeRole(UUID groupId, User userThatChanges, User UserToChange, Roles role) {
 
+    }
+
+    @Override
+    public HashMap<Group, String> findGroupsByUser(User user) {
+        return null;
     }
 
     @Override

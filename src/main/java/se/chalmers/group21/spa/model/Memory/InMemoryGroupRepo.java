@@ -52,4 +52,13 @@ public class InMemoryGroupRepo implements GroupRepository{
         Group group = findGroupById(groupId);
         group.changeRole(userThatChanges, userToChange, role);
     }
+
+    @Override
+    public HashMap<Group,String> findGroupsByUser(User user) {
+        HashMap<Group, String> GroupAndRole = new HashMap<>();
+        for(Group group : user.groups){
+            GroupAndRole.put(group, group.getMembers().get(user).toString());
+        }
+        return GroupAndRole;
+    }
 }

@@ -70,7 +70,7 @@ public class ProfileView {
         grid.add(aboutBox, 1, 1);
         grid.add(navigation, 2, 1);
 
-        root.setPrefSize(1000, 800);
+        root.setPrefSize(1000, 300);
 
         root.getChildren().add(grid);
         VBox.setVgrow(grid, Priority.ALWAYS);
@@ -82,20 +82,6 @@ public class ProfileView {
         return root;
     }
 
-    public Button getProfileButton() {
-        return profileButton;
-    }
-
-    private VBox createBox(String color) {
-        VBox box = new VBox();
-        box.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        box.setStyle(
-                "-fx-background-color: " + color + ";" +
-                        "-fx-background-radius: 25;"
-        );
-
-        return box;
-    }
 
     public void setUserDetailsView(VBox view){
         userDetails.getChildren().add(view);

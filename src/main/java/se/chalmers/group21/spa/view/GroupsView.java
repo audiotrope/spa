@@ -22,20 +22,26 @@ public class GroupsView extends VBox {
         groupsLabel.getStyleClass().add("accent-text-dark");
 
 
+
         getChildren().add(groupsLabel);
     }
 
     public void setGroupDetails(String groupName, String role){
-        VBox groupBox = new VBox(5);
+        VBox groupBox = new VBox();
         Label group = new Label(groupName);
         Label roleLabel = new Label("Role: " + role);
+        VBox individualGroupBox = new VBox();
+
         group.getStyleClass().add("subtitle");
-        group.getStyleClass().add("accent-text-dark");
+        group.getStyleClass().add("accent-text");
+
+        individualGroupBox.getStyleClass().add("profile-details");
 
         roleLabel.getStyleClass().add("body-text");
-        roleLabel.getStyleClass().add("accent-text-dark");
+        roleLabel.getStyleClass().add("accent-text");
 
-        groupBox.getChildren().addAll(group, roleLabel);
+        individualGroupBox.getChildren().addAll(group, roleLabel);
+        groupBox.getChildren().addAll(individualGroupBox);
 
 
         getChildren().add(groupBox);
