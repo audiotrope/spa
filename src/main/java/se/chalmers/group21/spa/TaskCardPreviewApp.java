@@ -24,6 +24,13 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The structure of this file was originally created by AI as a mockup. It has afterwards been changed by me to fit
+ * our application.
+ * This file is just to preview the view for a kanban board and will be extended and after that deleted when
+ * all the views are done.
+ * @author Thyra Öfverström
+ */
 public class TaskCardPreviewApp extends Application {
 
     @Override
@@ -40,7 +47,9 @@ public class TaskCardPreviewApp extends Application {
         Board board = boardManager.createBoard(UUID.randomUUID());
         TaskList list = boardManager.createTaskList(board.getId(), "To do");
 
-        Task task = taskManager.createGroupTask("Test", "...", LocalDate.now().plusDays(2),
+        Task taskPersonal = taskManager.createPersonalTask("test personal", "something", LocalDate.now().plusDays(3),creator.getUserId());
+
+        Task taskGroup = taskManager.createGroupTask("Test", "...", LocalDate.now().plusDays(2),
                 board.getId(), list.getId(), Set.of(creator.getUserId()));
 
         VBox content = new VBox();
@@ -50,7 +59,7 @@ public class TaskCardPreviewApp extends Application {
 
         TaskCardController controller = new TaskCardController(taskManager, overlayHost, group);
 
-        TaskCardView card = controller.createView(task);
+        TaskCardView card = controller.createView(taskPersonal);
         card.setMaxWidth(300);
         content.getChildren().add(card);
 

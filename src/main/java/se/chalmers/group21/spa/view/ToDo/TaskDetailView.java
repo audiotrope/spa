@@ -13,6 +13,15 @@ import javafx.scene.layout.VBox;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * The structure of this file was originally created by AI as a mockup. It has afterwards been changed by me to fit
+ * our application.
+ * This file handles the detail view for a task card, it comes up when you click on a task card. This is a StackPane
+ * that has a VBox in it because we want it to lay on top of everything else when the detail view is opened. Also
+ * a HBox for the buttons in the bottom.
+ * @author Thyra Öfverström
+ */
+
 public class TaskDetailView extends StackPane {
     private final TextField titleField = new TextField();
     private final TextArea descriptionArea = new TextArea();
@@ -28,7 +37,7 @@ public class TaskDetailView extends StackPane {
         setAlignment(Pos.CENTER);
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setOnMouseClicked(event -> {
-            if (event.getTarget() == this) {   // click on the dark area, not on the panel
+            if (event.getTarget() == this) {
                 close();
             }
         });

@@ -12,6 +12,12 @@ import se.chalmers.group21.spa.view.ToDo.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The structure of this file was originally created by AI as a mockup. It has afterwards been changed by me to fit
+ * our application.
+ * This file handles the collaboration between the view for a task card and the model for a task.
+ * @author Thyra Öfverström
+ */
 public class TaskCardController {
     private final TaskManager taskManager;
     private final StackPane overlayHost;
@@ -22,6 +28,7 @@ public class TaskCardController {
         this.overlayHost = overlayHost;
         this.group = group;
     }
+
     public TaskCardView createView(Task task) {
         TaskCardView view = new TaskCardView(toViewModel(task));
         view.setOnClicked(id -> openDetails(id, view));
@@ -86,7 +93,7 @@ public class TaskCardController {
                 .collect(Collectors.toSet());
 
         return group.getMembers().keySet().stream()
-                .map(user -> new AssigneeOption(user.getUserId(), user.username, assigned.contains(user.getUserId())))
+                .map(user -> new AssigneeOption(user.getUserId(), user.getUsername(), assigned.contains(user.getUserId())))
                 .sorted(Comparator.comparing(AssigneeOption::name))
                 .toList();
     }

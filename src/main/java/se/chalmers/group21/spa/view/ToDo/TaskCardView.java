@@ -16,6 +16,14 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+/**
+ * The structure of this file was originally created by AI as a mockup. It has afterwards been changed by me to fit
+ * our application.
+ * This file handles the view for a task card by creating it as a VBox.
+ * For the design of the card the file uses resourses-view-taskborad.css.
+ * @author Thyra Öfverström
+ */
+
 public class TaskCardView extends VBox {
     private static final DateTimeFormatter DEADLINE_FORMAT =
             DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH);
