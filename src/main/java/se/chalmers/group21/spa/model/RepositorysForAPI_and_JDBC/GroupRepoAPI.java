@@ -55,7 +55,7 @@ public class GroupRepoAPI implements GroupRepository {
         String json = gson.toJson(Map.of(
                 "group_id", groupId.toString(),
                 "user_id", user.getUserId().toString(),
-                "username", user.username,
+                "username", user.getUsername(),
                 "role", role.name().toLowerCase()));
         try {
             supabase.post("group_members", json);

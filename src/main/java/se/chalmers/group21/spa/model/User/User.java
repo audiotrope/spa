@@ -2,13 +2,15 @@ package se.chalmers.group21.spa.model.User;
 
 
 import se.chalmers.group21.spa.model.Group.Group;
+import se.chalmers.group21.spa.model.entities.TaskAssignment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 
 public class User {
-    public final String username;
+    private final String username;
     private final UUID userId;
     private ArrayList<String> courses;
     public ArrayList<Group> groups;
@@ -42,6 +44,29 @@ public class User {
         groups.add(group);
 
     }
+    public String getUsername(){
+        return username;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof User)) {
+            return false;
+        }
+
+        User other = (User) obj;
+        return Objects.equals(userId, other.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+
 
     public void removeCourse (String course){
         courses.remove(course);

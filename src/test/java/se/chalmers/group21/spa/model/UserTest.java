@@ -11,7 +11,7 @@ public class UserTest {
     @Test
     void constructorSetsUsername() {
         User user = new User("anna");
-        assertEquals("anna", user.username);
+        assertEquals("anna", user.getUsername());
     }
 
     @Test

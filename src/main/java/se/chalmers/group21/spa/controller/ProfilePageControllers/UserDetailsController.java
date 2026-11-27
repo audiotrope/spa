@@ -17,7 +17,7 @@ public class UserDetailsController {
 
     private void updateView(){
         view.setUserDetails(
-                user.username,
+                user.getUsername(),
                 user.getUserId().toString()
         );
 

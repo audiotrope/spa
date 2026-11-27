@@ -14,8 +14,10 @@ public class Group {
     public Group(String name, User creator){
         this.members = new HashMap<>();
         members.put(creator, Roles.ADMIN);
+
         this.groupId = UUID.randomUUID();
         this.groupName = name;
+
         creator.groups.add(this);
     }
     public Group(String name){
