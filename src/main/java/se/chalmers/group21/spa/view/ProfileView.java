@@ -15,6 +15,7 @@ public class ProfileView {
     private Button profileButton;
     private UserDetailsView userDetails;
     private GroupsView groupsView;
+    private AboutView aboutView;
 
     public ProfileView() {
         createView();
@@ -24,6 +25,7 @@ public class ProfileView {
     private void createView() {
         userDetails = new UserDetailsView();
         groupsView = new GroupsView();
+        aboutView = new AboutView();
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
@@ -58,22 +60,21 @@ public class ProfileView {
         //VBox options = new VBox();
         //    options.getStyleClass().add("sub-category2");
 
-
         VBox navigation = new VBox();
             navigation.getStyleClass().add("sub-category1");
 
-        VBox aboutBox = new VBox();
-            aboutBox.getStyleClass().add("sub-category1");
+        //VBox aboutBox = new VBox();
+        //    aboutBox.getStyleClass().add("sub-category1");
 
         grid.add(userDetails, 0, 0, 1, 2);
         grid.add(groupsView, 1, 0, 2, 1);
-        grid.add(aboutBox, 1, 1);
+        grid.add(aboutView, 1, 1);
         grid.add(navigation, 2, 1);
 
-        root.setPrefSize(1000, 300);
+        root.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         root.getChildren().add(grid);
-        VBox.setVgrow(grid, Priority.ALWAYS);
+        //VBox.setVgrow(grid, Priority.ALWAYS);
         grid.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
     }
@@ -85,9 +86,9 @@ public class ProfileView {
 
     public void setUserDetailsView(VBox view){
         userDetails.getChildren().add(view);
-        view.setVisible(true);
-        view.setManaged(true);
-        view.setMinSize(300, 200);
+        //view.setVisible(true);
+        //view.setManaged(true);
+        //view.setMinSize(300, 200);
     }
     public UserDetailsView getUserDetailsView() {
         return userDetails;

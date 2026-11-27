@@ -34,13 +34,13 @@ public class ProfileViewTest {
             GroupRepository groupRepo = new InMemoryGroupRepo(userRepo);
 
             GroupManager groupManager = new GroupManager(groupRepo);
-            User found = userRepo.findByUsername("Anna");
+            //User found = userRepo.findByUsername("Anna");
 
 
 
 
             // Skapa en testanvändare i Memory
-            /*
+
             User testUser = new User("Anna");
             User testUser2 = new User("Bosse");
             Group testGroup = new Group("Bassarna", testUser);
@@ -50,14 +50,14 @@ public class ProfileViewTest {
             testGroup3.addMember(testUser);
             testGroup2.addMember(testUser);
             testGroup.addMember(testUser2);
-            System.out.println(testUser.groups);
-             */
+            //System.out.println(testUser.groups);
+
 
 
 
             // Skapa controllern
             ProfileController controller =
-                    new ProfileController(found, groupManager);
+                    new ProfileController(testUser, groupManager);
 
             // Hämta viewn från controllern
             Scene scene = new Scene(
