@@ -1,4 +1,4 @@
-package se.chalmers.group21.spa.model.Group;
+package se.chalmers.group21.spa.model.enums;
 
 public enum Roles {
     MEMBER,

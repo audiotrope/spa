@@ -26,7 +26,7 @@ public class UserRepoAPI implements UserRepository {
     public void saveUser(User user) {
         String json = gson.toJson(Map.of(
                 "id", user.getUserId().toString(),
-                "username", user.username));
+                "username", user.getUsername()));
         try {
             supabase.post("users", json);
         } catch (IOException e) {

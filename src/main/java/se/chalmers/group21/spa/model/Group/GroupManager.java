@@ -2,21 +2,23 @@ package se.chalmers.group21.spa.model.Group;
 
 import se.chalmers.group21.spa.model.Interfaces.GroupRepository;
 import se.chalmers.group21.spa.model.User.User;
-
+import se.chalmers.group21.spa.model.enums.Roles;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
-public class NewGroupManager {
+public class GroupManager {
     private final GroupRepository repo;
 
-    public NewGroupManager(GroupRepository repo) {
+    public GroupManager(GroupRepository repo) {
         this.repo = repo;
     }
 
     public Group createGroup(String name, User creator ){
         Group group = new Group(name, creator);
-        repo.save(group, creator);
+        repo.save(group);
         return group;
     }
 
@@ -44,5 +46,9 @@ public class NewGroupManager {
         Group group = getGroup(groupId);
         group.changeRole(userThatChanges, userToChange, role);
         repo.changeRole(groupId, userThatChanges,userToChange, role);
+    }
+
+    public HashMap<Group, String> getGroupsForUser(User user) {
+        return repo.findGroupsByUser(user);
     }
 }
