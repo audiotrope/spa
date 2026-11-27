@@ -23,7 +23,9 @@ public class InMemoryBoard implements BoardRepository {
 
     @Override
     public Optional<Board> findByGroupId(UUID groupId) {
-        return Optional.empty();
+        return boards.values().stream()
+                .filter(board -> board.getGroupId().equals(groupId))
+                .findFirst();
     }
 
 }

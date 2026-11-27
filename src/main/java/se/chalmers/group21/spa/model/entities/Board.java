@@ -1,6 +1,7 @@
 package se.chalmers.group21.spa.model.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -41,8 +42,8 @@ public class Board {
         return groupId;
     }
 
-    public ArrayList<TaskList> getTaskLists(){
-        return taskLists;
+    public List<TaskList> getTaskLists(){
+        return List.copyOf(taskLists);
     }
 
     //AI

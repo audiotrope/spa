@@ -52,9 +52,11 @@ public class Task {
     }
 
     public void changeTitle(String title){
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Title cannot be empty");
+        }
         this.title = title;
     }
-
     public void changeStatus(Status status){
         this.status = status;
     }
@@ -100,12 +102,12 @@ public class Task {
     //AI
     public void assignUser(UUID userId){
        if (type != TaskType.GROUP){
-            throw new IllegalStateException(
+            throw new IllegalArgumentException(
                     "Only group tasks can have assignments"
             );
        }
        if (userId == null){
-           throw new IllegalStateException(
+           throw new IllegalArgumentException(
                    "User ID can not be null"
            );
        }
