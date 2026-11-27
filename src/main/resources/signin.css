@@ -1,0 +1,53 @@
+.sign-in {
+    -fx-background-color: white;
+    -fx-alignment: center;
+    -fx-padding: 24;
+    -fx-spacing: 100;          /* Welcome heading to form */
+}
+
+.welcome-title {
+    -fx-font-size: 35px;
+    -fx-text-fill: #60b8d1;
+    -fx-text-alignment: center;
+}
+
+.login-form {
+    -fx-alignment: center;
+    -fx-max-width: 430;
+    -fx-spacing: 26;           /* Gap between form controls */
+}
+
+.login-form .text-field {
+    -fx-pref-height: 44px;
+    -fx-font-size: 22px;
+    -fx-padding: 0 26;
+    -fx-background-color: white;
+    -fx-border-color: #b3b3b3;
+    -fx-border-width: 3;
+}
+
+.login-button {
+    -fx-max-width: 340;
+    -fx-pref-height: 44;
+    -fx-background-color: #63b7ce;
+    -fx-background-radius: 28;
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+}
+
+.signup-link {
+    -fx-font-size: 22px;
+    -fx-text-fill: black;
+    -fx-underline: true;
+}
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-size: 13px;
+}
+
+/* Make it so the placeholder text does not go away when clicking on the field */
+.login-form .text-field,
+.login-form .text-field:focused {
+    -fx-prompt-text-fill: #999999;
+}
