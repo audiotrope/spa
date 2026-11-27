@@ -5,6 +5,7 @@ import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.entities.TaskAssignment;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,8 +13,8 @@ import java.util.UUID;
 public class User {
     private final String username;
     private final UUID userId;
-    private ArrayList<String> courses;
-    public ArrayList<Group> groups;
+    private final ArrayList<String> courses;
+    private final ArrayList<Group> groups;
 
     //TODO
     //Todos todos;
@@ -22,13 +23,13 @@ public class User {
     public User(UUID id, String username){
         this.userId = id;
         this.username = username;
+        this.courses = new ArrayList<>();
+        this.groups = new ArrayList<>();
+
     }
 
     public User(String username){
-        this.userId = UUID.randomUUID();
-        this.username = username;
-        this.courses = new ArrayList<>();
-        this.groups = new ArrayList<>();
+        this(UUID.randomUUID(), username);
     }
 
     public void leaveGroup(Group group){
@@ -67,6 +68,12 @@ public class User {
         return Objects.hash(userId);
     }
 
+    public void addGroupToUser(Group group){
+        groups.add(group);
+    }
+    public List<Group> getUsersGroups(){
+        return groups;
+    }
 
     public void removeCourse (String course){
         courses.remove(course);

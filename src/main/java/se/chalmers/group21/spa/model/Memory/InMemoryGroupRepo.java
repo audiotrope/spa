@@ -56,7 +56,7 @@ public class InMemoryGroupRepo implements GroupRepository{
     @Override
     public HashMap<Group,String> findGroupsByUser(User user) {
         HashMap<Group, String> GroupAndRole = new HashMap<>();
-        for(Group group : user.groups){
+        for(Group group : user.getUsersGroups()){
             GroupAndRole.put(group, group.getMembers().get(user).toString());
         }
         return GroupAndRole;
