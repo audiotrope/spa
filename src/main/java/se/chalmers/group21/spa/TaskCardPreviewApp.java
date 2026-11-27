@@ -7,12 +7,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import se.chalmers.group21.spa.controller.TaskCardController;
+import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.Interfaces.BoardRepository;
 import se.chalmers.group21.spa.model.Interfaces.TaskRepository;
 import se.chalmers.group21.spa.model.ManagerTodo.BoardManager;
 import se.chalmers.group21.spa.model.ManagerTodo.TaskManager;
 import se.chalmers.group21.spa.model.Memory.InMemoryBoard;
 import se.chalmers.group21.spa.model.Memory.InMemoryTask;
+import se.chalmers.group21.spa.model.User.User;
 import se.chalmers.group21.spa.model.entities.Board;
 import se.chalmers.group21.spa.model.entities.Task;
 import se.chalmers.group21.spa.model.entities.TaskList;
@@ -26,6 +28,10 @@ public class TaskCardPreviewApp extends Application {
 
     @Override
     public void start(Stage stage) {
+        User creator = new User("Thyra");
+        Group group = new Group("Data structure", creator);
+        group.addMember(new User("Calle"));
+        group.addMember(new User("Fredrik"));
         TaskRepository taskRepository = new InMemoryTask();
         BoardRepository boardRepository = new InMemoryBoard();
         TaskManager taskManager = new TaskManager(taskRepository, boardRepository);
@@ -34,16 +40,15 @@ public class TaskCardPreviewApp extends Application {
         Board board = boardManager.createBoard(UUID.randomUUID());
         TaskList list = boardManager.createTaskList(board.getId(), "To do");
 
-        Task task = taskManager.createGroupTask("Test", "Draft the introduction for the data structures report",
-                LocalDate.now().plusDays(2), board.getId(), list.getId(),
-                Set.of(UUID.randomUUID(), UUID.randomUUID()));
+        Task task = taskManager.createGroupTask("Test", "...", LocalDate.now().plusDays(2),
+                board.getId(), list.getId(), Set.of(creator.getUserId()));
 
         VBox content = new VBox();
         content.setPadding(new Insets(20));
         content.getStyleClass().add("board-background");
         StackPane overlayHost = new StackPane(content);
 
-        TaskCardController controller = new TaskCardController(taskManager, overlayHost);
+        TaskCardController controller = new TaskCardController(taskManager, overlayHost, group);
 
         TaskCardView card = controller.createView(task);
         card.setMaxWidth(300);

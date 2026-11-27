@@ -1,6 +1,7 @@
 package se.chalmers.group21.spa.controller;
 
 import javafx.scene.layout.StackPane;
+import se.chalmers.group21.spa.model.Group.Group;
 import se.chalmers.group21.spa.model.ManagerTodo.TaskManager;
 import se.chalmers.group21.spa.model.entities.Task;
 import se.chalmers.group21.spa.model.entities.TaskAssignment;
@@ -8,19 +9,18 @@ import se.chalmers.group21.spa.model.enums.DeadlineState;
 import se.chalmers.group21.spa.model.enums.TaskType;
 import se.chalmers.group21.spa.view.ToDo.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TaskCardController {
     private final TaskManager taskManager;
     private final StackPane overlayHost;
+    private final Group group;
 
-    public TaskCardController(TaskManager taskManager, StackPane overlayHost) {
+    public TaskCardController(TaskManager taskManager, StackPane overlayHost, Group group) {
         this.taskManager = taskManager;
         this.overlayHost = overlayHost;
+        this.group = group;
     }
     public TaskCardView createView(Task task) {
         TaskCardView view = new TaskCardView(toViewModel(task));
@@ -78,13 +78,16 @@ public class TaskCardController {
     }
 
     private List<AssigneeOption> assigneeOptionsFor(Task task) {
-        // TODO: replace with the group's members from the user module, so users can also be added.
-        // For now only the current assignees are listed, so they can be removed.
         if (task.getType() != TaskType.GROUP) {
             return List.of();
         }
-        return task.getAssignments().stream()
-                .map(a -> new AssigneeOption(a.getUserId(), "User " + a.getUserId().toString().substring(0, 8), true))
+        Set<UUID> assigned = task.getAssignments().stream()
+                .map(TaskAssignment::getUserId)
+                .collect(Collectors.toSet());
+
+        return group.getMembers().keySet().stream()
+                .map(user -> new AssigneeOption(user.getUserId(), user.username, assigned.contains(user.getUserId())))
+                .sorted(Comparator.comparing(AssigneeOption::name))
                 .toList();
     }
 
