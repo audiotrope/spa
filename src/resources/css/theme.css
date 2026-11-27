@@ -13,6 +13,12 @@
     -fx-font-size: 28px;
     -fx-font-weight: bold;
 }
+.title-dark {
+    -fx-font-family: "Black Ops One";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #394B3F;
+}
 .subtitle {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
