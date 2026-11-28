@@ -31,7 +31,7 @@ public class UserSchedule implements Schedule {
         this.id = id;
         this.userId = userId;
         this.icsImporter = new IcsImporter();
-        this.schedule = (events != null) ? new ArrayList<>(events) : new ArrayList<>();
+        this.schedule = (events != null) ? new ArrayList<>(events) : new ArrayList<>(); // Ai generated line
         sortSchedule();
     }
 
