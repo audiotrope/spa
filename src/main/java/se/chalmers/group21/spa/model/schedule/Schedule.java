@@ -11,6 +11,4 @@ public interface Schedule {
 
     void addEvent(Event event);
 
-    void short_Schedule();
-
 }

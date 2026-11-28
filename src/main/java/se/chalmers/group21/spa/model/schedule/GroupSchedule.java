@@ -8,13 +8,21 @@ import java.util.UUID;
 
 public class GroupSchedule implements Schedule {
 
-    public ArrayList<Event> schedule;
-    private final UUID id;
+    private ArrayList<Event> schedule;
 
-    public GroupSchedule(UUID id, ArrayList<ArrayList<Event>> grupp_Schedules) { // grupp Schedule
+    private final UUID id;
+    private final UUID groupId;
+
+    public GroupSchedule(UUID groupId, ArrayList<ArrayList<Event>> grupp_Schedules) { // ÄNDRAT: ny grupp, tar bort
+                                                                                      // oanvänt id
+        this(UUID.randomUUID(), groupId, grupp_Schedules);
+    }
+
+    public GroupSchedule(UUID id, UUID groupId, ArrayList<ArrayList<Event>> grupp_Schedules) { // grupp Schedule
 
         this.schedule = new ArrayList<Event>();
         this.id = id;
+        this.groupId = groupId;
 
         for (ArrayList<Event> grupp_Memer_Schedule : grupp_Schedules) {
 
@@ -22,12 +30,17 @@ public class GroupSchedule implements Schedule {
 
         }
 
-        short_Schedule();
+        sortSchedule();
 
     }
 
+    @Override
     public UUID getId() {
         return id;
+    }
+
+    public UUID getGroupId() {
+        return groupId;
     }
 
     public ArrayList<Event> getSchedule() {
@@ -73,6 +86,14 @@ public class GroupSchedule implements Schedule {
 
         }
 
+        // ÄNDRAT: lägger till sista dagens tid fram till 17:00
+        if (beforeEnd != null) {
+            LocalDateTime dayEnd = beforeEnd.toLocalDate().atTime(17, 0);
+            if (beforeEnd.isBefore(dayEnd)) {
+                meetingschedule.add(new Event(beforeEnd, dayEnd, null, null, null));
+            }
+        }
+
         return meetingschedule;
     }
 
@@ -80,11 +101,11 @@ public class GroupSchedule implements Schedule {
 
         this.schedule.add(event);
 
-        short_Schedule();
+        sortSchedule();
 
     }
 
-    public void short_Schedule() {
+    public void sortSchedule() {
 
         this.schedule.sort((a, b) -> a.getStart().compareTo(b.getStart())); // Ai generated line
 

@@ -4,9 +4,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Event {
-
+    private final UUID id;
     public LocalDateTime start;
     public LocalDateTime end;
     public String eventName;
@@ -16,25 +17,46 @@ public class Event {
     public Event(LocalDateTime start, LocalDateTime end, String eventName, String activity,
             ArrayList<String> locations) {
 
+        this(UUID.randomUUID(), start, end, eventName, activity, locations);
+
+    }
+
+    public Event(UUID id, LocalDateTime start, LocalDateTime end, String eventName, String activity,
+            List<String> locations) {
+        this.id = id;
         this.start = start;
         this.end = end;
         this.eventName = eventName;
         this.activity = activity;
-        this.locations = locations;
-        
+        this.locations = (locations != null) ? new ArrayList<>(locations) : new ArrayList<>();
+    }
 
+    public UUID getId() {
+        return id;
     }
 
     public LocalDateTime getStart() {
-        return this.start;
+        return start;
     }
 
     public LocalDateTime getEnd() {
-        return this.end;
+        return end;
     }
 
     public String getEventName() {
         return eventName;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public List<LocalTime> getEventTimespan() {
+        return List.of(start.toLocalTime(), end.toLocalTime());
+    }
+
+    public List<String> getLocations() {
+        return List.copyOf(locations);
     }
 
     public ArrayList<LocalTime> get_Event_Timespan() {
